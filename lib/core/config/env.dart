@@ -13,6 +13,9 @@ class Env {
   static const String supabaseAnonKey =
       String.fromEnvironment('SUPABASE_ANON_KEY');
 
+  /// Shows developer-only screens (role tester). Off by default.
+  static const bool devToolsEnabled = bool.fromEnvironment('DEV_TOOLS');
+
   static bool get isSupabaseConfigured =>
       supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
 }

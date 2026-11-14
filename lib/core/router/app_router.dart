@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/create/presentation/create_page.dart';
+import '../../features/dev_tools/presentation/role_tester_page.dart';
 import '../../features/explore/presentation/explore_page.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/my_sports/presentation/my_sports_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
 import '../../features/shell/presentation/main_shell.dart';
+import '../config/env.dart';
 import 'app_routes.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -59,6 +61,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      if (Env.devToolsEnabled)
+        GoRoute(
+          path: AppRoutes.devRoles,
+          builder: (context, state) => const RoleTesterPage(),
+        ),
     ],
   );
 });

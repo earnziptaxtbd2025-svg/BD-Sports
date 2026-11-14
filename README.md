@@ -3,8 +3,12 @@
 Bangladesh grassroots football and cricket tournament platform.
 Tournament marketplace, tournament management, and sports community in one app.
 
-Status: **Step 0.1 (Tech stack) and Step 0.6 (GitHub and APK pipeline) done.**
-Next: Step 0.2 (Database schema).
+Status: Steps 0.1 (Tech stack), 0.6 (GitHub and APK pipeline) and 0.7 (Roles and
+permissions) written. Next: Step 0.8 (Offline-first architecture).
+
+Project decision: the database and backend connection are built **last**, after all
+screens and features. Until then screens use in-memory sample data behind repository
+interfaces, so connecting the real backend later does not require rewriting screens.
 
 ## Project structure
 
@@ -13,6 +17,7 @@ lib/
   main.dart                 App entry, optional Supabase init
   app.dart                  MaterialApp.router and themes
   core/
+    auth/                   Roles, permissions and the access policy (see docs/ROLES.md)
     config/env.dart         Build-time config (--dart-define)
     router/                 go_router setup and route paths
     theme/                  Colours and ThemeData (full design system in Step 0.5)
@@ -21,8 +26,10 @@ lib/
   features/
     shell/                  Bottom navigation
     home/ explore/ create/ my_sports/ profile/
+    dev_tools/              Role tester (only when DEV_TOOLS=true)
 test/                       Widget tests
 docs/TECH_STACK.md          Technology decisions and reasons
+docs/ROLES.md               Role and permission matrix
 .github/workflows/          APK build pipeline
 ```
 

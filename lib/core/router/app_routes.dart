@@ -7,4 +7,7 @@ class AppRoutes {
   static const String create = '/create';
   static const String mySports = '/my-sports';
   static const String profile = '/profile';
+
+  /// Developer tools (only registered when DEV_TOOLS is on).
+  static const String devRoles = '/dev/roles';
 }
