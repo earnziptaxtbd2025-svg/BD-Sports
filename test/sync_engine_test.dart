@@ -28,7 +28,7 @@ void main() {
     final c = ProviderContainer(
       overrides: [
         outboxStorageProvider.overrideWithValue(InMemoryOutboxStorage()),
-        connectivityStreamProvider.overrideWith((ref) => Stream<bool>.value(true)),
+        internetReachableProvider.overrideWith((ref) => Stream<bool>.value(true)),
         syncHandlersProvider.overrideWithValue(<String, SyncHandler>{'t': fake}),
       ],
     );

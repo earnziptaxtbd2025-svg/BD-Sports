@@ -7,6 +7,7 @@ import '../../features/dev_tools/presentation/sync_tester_page.dart';
 import '../../features/explore/presentation/explore_page.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/my_sports/presentation/my_sports_page.dart';
+import '../../features/profile/presentation/privacy_settings_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
 import '../../features/shell/presentation/main_shell.dart';
 import '../config/env.dart';
@@ -61,6 +62,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.privacy,
+        builder: (context, state) => const PrivacySettingsPage(),
       ),
       if (Env.devToolsEnabled)
         GoRoute(

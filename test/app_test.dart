@@ -18,7 +18,7 @@ void main() {
     return ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
-        connectivityStreamProvider.overrideWith((ref) => Stream<bool>.value(true)),
+        internetReachableProvider.overrideWith((ref) => Stream<bool>.value(true)),
       ],
       child: const BdSportsApp(),
     );

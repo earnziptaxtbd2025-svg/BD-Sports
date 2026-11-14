@@ -29,6 +29,7 @@ document database.
 | Local storage for offline | Step 0.8 (done) | SharedPreferences outbox and cache behind replaceable interfaces. Move to SQLite only if data volume requires it (see docs/OFFLINE.md). |
 | Push notifications | Step 1.13 | Firebase Cloud Messaging |
 | Maps | Step 3.2 | OpenStreetMap (flutter_map) avoids Google Maps billing |
+| Secure token storage (flutter_secure_storage) | Step 1.1 | Added together with sign-in, where it is first needed |
 | Public web pages | Step 0.10 | Read-only pages for sharing links without installing the app |
 | Payments | Step 5.5 | bKash / Nagad merchant APIs |
 | Bangla font and l10n | Step 0.4 | Bundle a Bangla font so text looks the same on every phone |

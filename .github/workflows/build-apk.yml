@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      production:
+        description: 'Production build (hides the developer tools)'
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -39,6 +44,13 @@ jobs:
           fi
           sed -i 's|android:label="[^"]*"|android:label="BD Sports"|' "$MANIFEST"
 
+          # Security: do not let Android copy app data to cloud backups, and block
+          # plain http traffic (HTTPS only).
+          if ! grep -q 'android:allowBackup' "$MANIFEST"; then
+            sed -i 's|<application|<application android:allowBackup="false" android:usesCleartextTraffic="false"|' "$MANIFEST"
+          fi
+          grep -n 'uses-permission\|<application\|allowBackup\|usesCleartextTraffic' "$MANIFEST"
+
       # Android lint crashes in this toolchain (NoSuchMethodError in JavaDocParser).
       # Lint only reviews code style. It does not change the APK, so it is turned off for release builds.
       - name: Disable Android lint for release builds
@@ -64,12 +76,16 @@ jobs:
         run: flutter test
         continue-on-error: true
 
+      # Security: --obfuscate makes the app harder to reverse-engineer. The symbols
+      # folder is kept as an artifact so crash reports can still be read.
       - name: Build release APK
         run: >
           flutter build apk --release
+          --obfuscate
+          --split-debug-info=build/symbols
           --build-name=0.1.0
           --build-number=${{ github.run_number }}
-          --dart-define=DEV_TOOLS=true
+          --dart-define=DEV_TOOLS=${{ inputs.production && 'false' || 'true' }}
           --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }}
           --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
@@ -77,3 +93,8 @@ jobs:
         with:
           name: bd-sports-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bd-sports-debug-symbols
+          path: build/symbols

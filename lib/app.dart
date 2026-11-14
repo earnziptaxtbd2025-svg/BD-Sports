@@ -21,7 +21,9 @@ class BdSportsApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      // Light (white and green) for everyone. Dark mode becomes a user setting in
+      // Step 1B.13, so the app does not change just because the phone is in dark mode.
+      themeMode: ThemeMode.light,
       routerConfig: router,
     );
   }

@@ -24,6 +24,7 @@ class AppTheme {
 
     // Pin the key greens so the app is clearly green, not a tinted neutral.
     final scheme = base.copyWith(
+      surface: isLight ? Colors.white : base.surface,
       primary: isLight ? pitchGreen : const Color(0xFF6FDC95),
       onPrimary: isLight ? Colors.white : const Color(0xFF00391B),
       primaryContainer:
@@ -35,7 +36,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor: scheme.surface,
+      scaffoldBackgroundColor: isLight ? Colors.white : scheme.surface,
       appBarTheme: AppBarTheme(
         centerTitle: false,
         backgroundColor: scheme.primary,
@@ -44,6 +45,8 @@ class AppTheme {
         scrolledUnderElevation: 0,
       ),
       navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: isLight ? Colors.white : null,
+        surfaceTintColor: Colors.transparent,
         indicatorColor: scheme.primaryContainer,
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);

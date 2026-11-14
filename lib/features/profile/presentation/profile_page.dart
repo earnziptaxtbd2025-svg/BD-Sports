@@ -26,6 +26,13 @@ class ProfilePage extends ConsumerWidget {
                   : user.accountRole.label,
             ),
           ),
+          ListTile(
+            leading: const Icon(Icons.lock_outline),
+            title: const Text('Privacy settings'),
+            subtitle: const Text('Choose who can see your details.'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.privacy),
+          ),
           if (Env.devToolsEnabled) ...[
             const Divider(),
             ListTile(
