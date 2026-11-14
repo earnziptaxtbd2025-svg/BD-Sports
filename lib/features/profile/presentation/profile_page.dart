@@ -35,6 +35,13 @@ class ProfilePage extends ConsumerWidget {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push(AppRoutes.devRoles),
             ),
+            ListTile(
+              leading: const Icon(Icons.sync_alt),
+              title: const Text('Offline sync tester'),
+              subtitle: const Text('Developer tool, removed in the final release.'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push(AppRoutes.devSync),
+            ),
           ],
         ],
       ),

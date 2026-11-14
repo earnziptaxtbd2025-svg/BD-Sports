@@ -10,4 +10,5 @@ class AppRoutes {
 
   /// Developer tools (only registered when DEV_TOOLS is on).
   static const String devRoles = '/dev/roles';
+  static const String devSync = '/dev/sync';
 }

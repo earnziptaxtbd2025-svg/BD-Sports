@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/widgets/sync_status_banner.dart';
+
 /// Bottom navigation: Home, Explore, Create, My Sports, Profile.
 class MainShell extends StatelessWidget {
   const MainShell({super.key, required this.navigationShell});
@@ -10,7 +12,12 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
+      body: Column(
+        children: [
+          Expanded(child: navigationShell),
+          const SyncStatusBanner(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (index) => navigationShell.goBranch(

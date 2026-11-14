@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/create/presentation/create_page.dart';
 import '../../features/dev_tools/presentation/role_tester_page.dart';
+import '../../features/dev_tools/presentation/sync_tester_page.dart';
 import '../../features/explore/presentation/explore_page.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/my_sports/presentation/my_sports_page.dart';
@@ -65,6 +66,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: AppRoutes.devRoles,
           builder: (context, state) => const RoleTesterPage(),
+        ),
+      if (Env.devToolsEnabled)
+        GoRoute(
+          path: AppRoutes.devSync,
+          builder: (context, state) => const SyncTesterPage(),
         ),
     ],
   );

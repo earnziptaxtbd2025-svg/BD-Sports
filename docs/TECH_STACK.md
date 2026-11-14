@@ -26,7 +26,7 @@ document database.
 | Topic | Decide at | Notes |
 |---|---|---|
 | Phone OTP provider | Step 1.1 | Supabase built-in SMS providers are expensive for Bangladesh. Plan: a local SMS gateway called from an Edge Function. Development uses email login. |
-| Local database for offline | Step 0.8 | Candidate: Drift (SQLite) |
+| Local storage for offline | Step 0.8 (done) | SharedPreferences outbox and cache behind replaceable interfaces. Move to SQLite only if data volume requires it (see docs/OFFLINE.md). |
 | Push notifications | Step 1.13 | Firebase Cloud Messaging |
 | Maps | Step 3.2 | OpenStreetMap (flutter_map) avoids Google Maps billing |
 | Public web pages | Step 0.10 | Read-only pages for sharing links without installing the app |
