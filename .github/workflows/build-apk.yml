@@ -39,28 +39,10 @@ jobs:
           fi
           sed -i 's|android:label="[^"]*"|android:label="BD Sports"|' "$MANIFEST"
 
-      - name: Disable crashing Android Lint in Gradle
+      - name: Configure Gradle properties for release build
         run: |
-          if [ -f android/app/build.gradle.kts ]; then
-            cat << 'EOF' >> android/app/build.gradle.kts
-
-android {
-    lint {
-        checkReleaseBuilds = false
-        abortOnError = false
-    }
-}
-EOF
-          elif [ -f android/app/build.gradle ]; then
-            cat << 'EOF' >> android/app/build.gradle
-
-android {
-    lint {
-        checkReleaseBuilds false
-        abortOnError false
-    }
-}
-EOF
+          if [ -f android/gradle.properties ]; then
+            echo "android.lint.checkReleaseBuilds=false" >> android/gradle.properties
           fi
 
       - name: Install dependencies
