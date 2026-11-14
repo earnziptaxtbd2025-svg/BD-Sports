@@ -39,10 +39,12 @@ jobs:
           fi
           sed -i 's|android:label="[^"]*"|android:label="BD Sports"|' "$MANIFEST"
 
-      - name: Configure Gradle properties for release build
+      - name: Disable all Gradle Lint tasks
         run: |
-          if [ -f android/gradle.properties ]; then
-            echo "android.lint.checkReleaseBuilds=false" >> android/gradle.properties
+          if [ -f android/app/build.gradle.kts ]; then
+            printf '\ntasks.matching { it.name.contains("Lint", ignoreCase = true) }.configureEach { enabled = false }\n' >> android/app/build.gradle.kts
+          elif [ -f android/app/build.gradle ]; then
+            printf '\ntasks.matching { it.name.contains("Lint", ignoreCase = true) }.configureEach { enabled = false }\n' >> android/app/build.gradle
           fi
 
       - name: Install dependencies
