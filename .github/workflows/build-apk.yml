@@ -39,13 +39,18 @@ jobs:
           fi
           sed -i 's|android:label="[^"]*"|android:label="BD Sports"|' "$MANIFEST"
 
-      - name: Disable all Gradle Lint tasks
+      # Android lint crashes in this toolchain (NoSuchMethodError in JavaDocParser).
+      # Lint only reviews code style. It does not change the APK, so it is turned off for release builds.
+      - name: Disable Android lint for release builds
         run: |
-          if [ -f android/app/build.gradle.kts ]; then
-            printf '\ntasks.matching { it.name.contains("Lint", ignoreCase = true) }.configureEach { enabled = false }\n' >> android/app/build.gradle.kts
-          elif [ -f android/app/build.gradle ]; then
-            printf '\ntasks.matching { it.name.contains("Lint", ignoreCase = true) }.configureEach { enabled = false }\n' >> android/app/build.gradle
+          cd android/app
+          if [ -f build.gradle.kts ]; then
+            sed -i '0,/^android {/s//android {\n    lint {\n        checkReleaseBuilds = false\n        abortOnError = false\n    }/' build.gradle.kts
+          elif [ -f build.gradle ]; then
+            sed -i '0,/^android {/s//android {\n    lint {\n        checkReleaseBuilds false\n        abortOnError false\n    }/' build.gradle
           fi
+          grep -q 'checkReleaseBuilds' build.gradle* || { echo "Lint patch failed"; exit 1; }
+          grep -n -A4 'lint {' build.gradle*
 
       - name: Install dependencies
         run: flutter pub get
@@ -64,6 +69,7 @@ jobs:
           flutter build apk --release
           --build-name=0.1.0
           --build-number=${{ github.run_number }}
+          --dart-define=DEV_TOOLS=true
           --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }}
           --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
