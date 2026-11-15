@@ -36,10 +36,13 @@ class SyncState {
 ///
 /// Rules:
 /// - Changes are sent in the order they were made.
-/// - A temporary failure stops the run and waits (back-off), so order is kept.
+/// - A temporary failure stops the pass and waits (back-off), so order is kept.
 /// - A permanent refusal marks that one change as failed and moves on.
 /// - It runs when the app starts, when the internet comes back, when a new change
 ///   is added, every 30 seconds, and when the user taps "Sync now".
+///
+/// A request to sync is never lost: if one arrives while a pass is running (or just
+/// finishing), another pass runs straight after it.
 class SyncEngine extends Notifier<SyncState> {
   Timer? _timer;
   Future<void>? _current;
@@ -47,7 +50,7 @@ class SyncEngine extends Notifier<SyncState> {
   bool _forceNext = false;
   bool _disposed = false;
   bool _syncedAny = false;
-  String? _runError;
+  String? _passError;
 
   @override
   SyncState build() {
@@ -79,64 +82,58 @@ class SyncEngine extends Notifier<SyncState> {
     return const SyncState();
   }
 
-  /// Starts a sync, or joins the one that is already running.
+  /// Asks for a sync. If one is already running, it will run once more after the
+  /// current pass, and the returned future completes when everything is done.
   Future<void> syncNow({bool force = false}) {
-    final running = _current;
-    if (running != null) {
-      _rerun = true;
-      if (force) {
-        _forceNext = true;
-      }
-      return running;
+    if (force) {
+      _forceNext = true;
     }
-
-    final run = _run(force: force).whenComplete(() {
-      _current = null;
-    });
-    _current = run;
-    return run;
+    _rerun = true;
+    return _current ??= _runPasses();
   }
 
-  Future<void> _run({required bool force}) async {
+  Future<void> _runPasses() async {
+    // Let syncNow() store this future before any work starts.
+    await null;
+    try {
+      while (_rerun && !_disposed) {
+        _rerun = false;
+        await _pass();
+      }
+    } finally {
+      // Cleared in the same step as the last check, so a request can never fall
+      // between "no more passes" and "ready for a new run".
+      _current = null;
+    }
+  }
+
+  Future<void> _pass() async {
     if (_disposed || !ref.read(isOnlineProvider)) {
       return;
     }
 
-    _syncedAny = false;
-    _runError = null;
-    var forceThisPass = force;
-    var started = false;
-
-    try {
-      do {
-        _rerun = false;
-        final operations = await _snapshot();
-        final hasWork = operations.any(
-          (op) => op.status == OperationStatus.pending,
-        );
-        if (_disposed || !hasWork) {
-          break;
-        }
-
-        started = true;
-        _setState(state.copyWith(isSyncing: true));
-        await _drain(force: forceThisPass || _forceNext);
-        _forceNext = false;
-        forceThisPass = false;
-      } while (_rerun && !_disposed);
-    } catch (error) {
-      _runError = error.toString();
-    }
-
-    if (!started) {
+    final operations = await _snapshot();
+    if (_disposed ||
+        !operations.any((op) => op.status == OperationStatus.pending)) {
       return;
     }
+
+    _syncedAny = false;
+    _passError = null;
+    _setState(state.copyWith(isSyncing: true));
+
+    try {
+      await _drain(force: _forceNext);
+    } catch (error) {
+      _passError = error.toString();
+    }
+    _forceNext = false;
 
     _setState(
       SyncState(
         isSyncing: false,
         lastSyncedAt: _syncedAny ? DateTime.now() : state.lastSyncedAt,
-        lastError: _runError,
+        lastError: _passError,
       ),
     );
   }
@@ -180,11 +177,11 @@ class SyncEngine extends Notifier<SyncState> {
         _syncedAny = true;
       } else if (result is SyncRetry) {
         await outbox.markRetry(op.id, result.reason);
-        _runError = result.reason;
+        _passError = result.reason;
         return;
       } else if (result is SyncRejected) {
         await outbox.markFailed(op.id, result.reason);
-        _runError = result.reason;
+        _passError = result.reason;
       }
     }
   }

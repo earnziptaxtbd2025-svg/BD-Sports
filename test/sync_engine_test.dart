@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bd_sports/core/network/connectivity_providers.dart';
 import 'package:bd_sports/core/sync/outbox.dart';
 import 'package:bd_sports/core/sync/outbox_storage.dart';
@@ -17,6 +19,25 @@ class _FakeHandler implements SyncHandler {
   Future<SyncResult> handle(PendingOperation operation) async {
     seen.add(operation.payload['n'] as int);
     return _answer(operation);
+  }
+}
+
+/// Holds the first change until the test lets it go, to test changes that arrive
+/// while a sync is running.
+class _GatedHandler implements SyncHandler {
+  final Completer<void> started = Completer<void>();
+  final Completer<void> gate = Completer<void>();
+  final List<int> seen = <int>[];
+
+  @override
+  Future<SyncResult> handle(PendingOperation operation) async {
+    final n = operation.payload['n'] as int;
+    seen.add(n);
+    if (n == 1) {
+      started.complete();
+      await gate.future;
+    }
+    return const SyncSuccess();
   }
 }
 
@@ -109,5 +130,38 @@ void main() {
     expect(left.single.status, OperationStatus.failed);
     expect(left.single.lastError, 'invalid');
     expect(handler.seen, [1, 2]);
+  });
+
+  test('a change added while a sync is running is still sent', () async {
+    final gated = _GatedHandler();
+    container = ProviderContainer(
+      overrides: [
+        outboxStorageProvider.overrideWithValue(InMemoryOutboxStorage()),
+        internetReachableProvider.overrideWith((ref) => Stream<bool>.value(true)),
+        syncHandlersProvider.overrideWithValue(<String, SyncHandler>{'t': gated}),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final engine = container.read(syncEngineProvider.notifier);
+    await container.read(outboxProvider.future);
+    container.read(simulateOfflineProvider.notifier).set(true);
+
+    final box = container.read(outboxProvider.notifier);
+    await box.enqueue('t', <String, dynamic>{'n': 1});
+
+    container.read(simulateOfflineProvider.notifier).set(false);
+    final firstRun = engine.syncNow();
+    await gated.started.future;
+
+    // The first change is being sent. A second one arrives now.
+    await box.enqueue('t', <String, dynamic>{'n': 2});
+    gated.gate.complete();
+
+    await firstRun;
+    await engine.syncNow();
+
+    expect(gated.seen, [1, 2]);
+    expect(container.read(outboxProvider).value, isEmpty);
   });
 }
