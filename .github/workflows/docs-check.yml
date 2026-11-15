@@ -1,0 +1,23 @@
+name: Screen list check
+
+on:
+  push:
+    paths:
+      - 'tool/**'
+      - 'docs/SCREENS.md'
+      - 'lib/core/navigation/screen_registry.dart'
+  pull_request:
+    paths:
+      - 'tool/**'
+      - 'docs/SCREENS.md'
+      - 'lib/core/navigation/screen_registry.dart'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Screen list, Dart registry and docs agree
+        run: python3 tool/check_screens.py

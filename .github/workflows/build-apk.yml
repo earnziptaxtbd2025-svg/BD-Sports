@@ -51,6 +51,36 @@ jobs:
           fi
           grep -n 'uses-permission\|<application\|allowBackup\|usesCleartextTraffic' "$MANIFEST"
 
+      # Shared links (https://your-site/t/...) open the app when it is installed.
+      # Runs only when the repository variable PUBLIC_BASE_URL is set.
+      - name: Add app links for shared URLs
+        if: ${{ vars.PUBLIC_BASE_URL != '' }}
+        env:
+          PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          host = re.sub(r'^https?://([^/]+).*$', r'\1', os.environ['PUBLIC_BASE_URL'].strip())
+          path = 'android/app/src/main/AndroidManifest.xml'
+          manifest = open(path).read()
+          block = (
+              '    <intent-filter android:autoVerify="true">\n'
+              '                <action android:name="android.intent.action.VIEW" />\n'
+              '                <category android:name="android.intent.category.DEFAULT" />\n'
+              '                <category android:name="android.intent.category.BROWSABLE" />\n'
+              '                <data android:scheme="https" android:host="%s" android:pathPrefix="/t/" />\n'
+              '                <data android:scheme="https" android:host="%s" android:pathPrefix="/m/" />\n'
+              '                <data android:scheme="https" android:host="%s" android:pathPrefix="/team/" />\n'
+              '            </intent-filter>\n'
+              '        ' % (host, host, host)
+          )
+          if 'android:autoVerify' not in manifest:
+              manifest = manifest.replace('</activity>', block + '</activity>', 1)
+              open(path, 'w').write(manifest)
+          print('App links added for host:', host)
+          PY
+          grep -n -B1 -A8 'autoVerify' android/app/src/main/AndroidManifest.xml
+
       # Android lint crashes in this toolchain (NoSuchMethodError in JavaDocParser).
       # Lint only reviews code style. It does not change the APK, so it is turned off for release builds.
       - name: Disable Android lint for release builds
@@ -86,6 +116,7 @@ jobs:
           --build-name=0.1.0
           --build-number=${{ github.run_number }}
           --dart-define=DEV_TOOLS=${{ inputs.production && 'false' || 'true' }}
+          --dart-define=PUBLIC_BASE_URL=${{ vars.PUBLIC_BASE_URL }}
           --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }}
           --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 

@@ -1,0 +1,3 @@
+# Sample stage: no indexing yet. Change to Allow when real tournaments are public.
+User-agent: *
+Disallow: /

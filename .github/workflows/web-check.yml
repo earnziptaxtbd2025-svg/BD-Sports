@@ -1,0 +1,26 @@
+name: Public pages check
+
+on:
+  push:
+    paths:
+      - 'web_public/**'
+  pull_request:
+    paths:
+      - 'web_public/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Logic tests
+        run: node web_public/test/logic.test.js
+
+      - name: Page build tests
+        run: node web_public/test/render.test.js

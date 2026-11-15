@@ -13,6 +13,10 @@ class Env {
   static const String supabaseAnonKey =
       String.fromEnvironment('SUPABASE_ANON_KEY');
 
+  /// Address of the public web pages, for example https://sports.example.com
+  /// Set it with --dart-define=PUBLIC_BASE_URL=... (see docs/PUBLIC_PAGES.md).
+  static const String publicBaseUrl = String.fromEnvironment('PUBLIC_BASE_URL');
+
   /// Shows developer-only screens (role tester). Off by default.
   static const bool devToolsEnabled = bool.fromEnvironment('DEV_TOOLS');
 

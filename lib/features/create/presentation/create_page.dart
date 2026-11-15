@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/widgets/placeholder_page.dart';
+import '../../../core/navigation/screen_spec.dart';
+import '../../navigation/presentation/hub_page.dart';
 
 class CreatePage extends StatelessWidget {
   const CreatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const PlaceholderPage(
+    return const HubPage(
       title: 'Create',
-      icon: Icons.add_circle_outline,
-      description: 'Create a tournament in 5 to 10 minutes. Built in Step 1.3.',
+      hub: HubTab.create,
+      intro: 'Start a tournament, team, club or profile.',
     );
   }
 }

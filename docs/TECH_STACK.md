@@ -30,6 +30,6 @@ document database.
 | Push notifications | Step 1.13 | Firebase Cloud Messaging |
 | Maps | Step 3.2 | OpenStreetMap (flutter_map) avoids Google Maps billing |
 | Secure token storage (flutter_secure_storage) | Step 1.1 | Added together with sign-in, where it is first needed |
-| Public web pages | Step 0.10 | Read-only pages for sharing links without installing the app |
+| Public web pages | Step 0.10 (done) | Plain HTML/CSS/JS on Cloudflare Pages, no framework, tiny pages. Details in docs/PUBLIC_PAGES.md |
 | Payments | Step 5.5 | bKash / Nagad merchant APIs |
 | Bangla font and l10n | Step 0.4 | Bundle a Bangla font so text looks the same on every phone |

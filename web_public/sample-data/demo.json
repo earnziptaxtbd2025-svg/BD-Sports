@@ -1,0 +1,34 @@
+{
+  "tournament": {
+    "id": "demo",
+    "title": "পীরগাছা প্রিমিয়ার ফুটবল টুর্নামেন্ট ২০২৬",
+    "sport": "football",
+    "status": "ongoing",
+    "description": "গ্রামের মাঠে ৪ দলের লিগ টুর্নামেন্ট। এটি শুধু নমুনা তথ্য।",
+    "startDate": "2026-12-15T04:00:00Z",
+    "endDate": "2026-12-30T12:00:00Z",
+    "location": {
+      "division": "রংপুর",
+      "district": "রংপুর",
+      "upazila": "পীরগাছা",
+      "village": "কান্দি",
+      "ground": "পীরগাছা সরকারি মাঠ"
+    },
+    "organizer": { "name": "পীরগাছা যুব সংঘ", "verified": true },
+    "prize": { "champion": 50000, "runnerUp": 25000 }
+  },
+  "teams": [
+    { "id": "a", "name": "মাঠপাড়া ক্লাব" },
+    { "id": "b", "name": "কান্দি একাদশ" },
+    { "id": "c", "name": "ইউনিয়ন স্টার" },
+    { "id": "d", "name": "নয়াপাড়া যুব সংঘ" }
+  ],
+  "matches": [
+    { "id": "m1", "homeId": "a", "awayId": "b", "status": "finished", "homeGoals": 2, "awayGoals": 1, "kickoff": "2026-12-15T09:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" },
+    { "id": "m2", "homeId": "c", "awayId": "d", "status": "finished", "homeGoals": 0, "awayGoals": 0, "kickoff": "2026-12-15T11:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" },
+    { "id": "m3", "homeId": "a", "awayId": "c", "status": "finished", "homeGoals": 1, "awayGoals": 3, "kickoff": "2026-12-17T09:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" },
+    { "id": "m4", "homeId": "b", "awayId": "d", "status": "finished", "homeGoals": 2, "awayGoals": 2, "kickoff": "2026-12-17T11:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" },
+    { "id": "m5", "homeId": "a", "awayId": "d", "status": "scheduled", "kickoff": "2026-12-19T09:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" },
+    { "id": "m6", "homeId": "b", "awayId": "c", "status": "scheduled", "kickoff": "2026-12-19T11:00:00Z", "ground": "পীরগাছা সরকারি মাঠ" }
+  ]
+}
