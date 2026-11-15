@@ -17,7 +17,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Screen list, Dart registry and docs agree
         run: python3 tool/check_screens.py
