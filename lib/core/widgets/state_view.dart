@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_strings.dart';
+
+enum _StateKind { custom, loading, error, offline }
+
 /// The one way to show loading, empty, error and offline states.
 /// Every screen that loads data uses it, so the app feels the same everywhere.
+/// Default texts follow the app language.
 class StateView extends StatelessWidget {
   const StateView({
     super.key,
@@ -10,60 +15,62 @@ class StateView extends StatelessWidget {
     this.message,
     this.actionLabel,
     this.onAction,
-    this.loading = false,
-  });
+  }) : _kind = _StateKind.custom;
 
-  const StateView.loading({Key? key, String? message})
-      : this(key: key, loading: true, message: message);
+  const StateView.loading({super.key, this.message})
+      : _kind = _StateKind.loading,
+        icon = null,
+        title = null,
+        actionLabel = null,
+        onAction = null;
 
   const StateView.empty({
-    Key? key,
-    required String title,
-    String? message,
-    String? actionLabel,
-    VoidCallback? onAction,
-  }) : this(
-          key: key,
-          icon: Icons.inbox_outlined,
-          title: title,
-          message: message,
-          actionLabel: actionLabel,
-          onAction: onAction,
-        );
+    super.key,
+    required String this.title,
+    this.message,
+    this.actionLabel,
+    this.onAction,
+  })  : _kind = _StateKind.custom,
+        icon = Icons.inbox_outlined;
 
-  const StateView.error({
-    Key? key,
-    String title = 'Something went wrong',
-    String? message,
-    VoidCallback? onRetry,
-  }) : this(
-          key: key,
-          icon: Icons.error_outline,
-          title: title,
-          message: message,
-          actionLabel: onRetry == null ? null : 'Try again',
-          onAction: onRetry,
-        );
+  /// [title] and [message] default to a general text in the app language.
+  /// A "Try again" button shows only when [onRetry] is given.
+  const StateView.error({super.key, this.title, this.message, VoidCallback? onRetry})
+      : _kind = _StateKind.error,
+        icon = Icons.error_outline,
+        actionLabel = null,
+        onAction = onRetry;
 
-  const StateView.offline({Key? key, String? message})
-      : this(
-          key: key,
-          icon: Icons.cloud_off_outlined,
-          title: 'You are offline',
-          message: message ??
-              'Showing saved information. It updates when the internet is back.',
-        );
+  const StateView.offline({super.key, this.message})
+      : _kind = _StateKind.offline,
+        icon = Icons.cloud_off_outlined,
+        title = null,
+        actionLabel = null,
+        onAction = null;
 
+  final _StateKind _kind;
   final IconData? icon;
   final String? title;
   final String? message;
   final String? actionLabel;
   final VoidCallback? onAction;
-  final bool loading;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = context.s;
+
+    final shownTitle = switch (_kind) {
+      _StateKind.error => title ?? s.errorTitle,
+      _StateKind.offline => s.offlineTitle,
+      _ => title,
+    };
+    final shownMessage = _kind == _StateKind.offline
+        ? (message ?? s.offlineMessage)
+        : message;
+    final shownAction = _kind == _StateKind.error && onAction != null
+        ? s.tryAgain
+        : actionLabel;
 
     return Center(
       child: Padding(
@@ -71,29 +78,29 @@ class StateView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (loading)
+            if (_kind == _StateKind.loading)
               const CircularProgressIndicator()
             else if (icon != null)
               Icon(icon, size: 56, color: theme.colorScheme.primary),
-            if (title != null) ...[
+            if (shownTitle != null) ...[
               const SizedBox(height: 16),
               Text(
-                title!,
+                shownTitle,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleMedium,
               ),
             ],
-            if (message != null) ...[
+            if (shownMessage != null) ...[
               const SizedBox(height: 8),
               Text(
-                message!,
+                shownMessage,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium,
               ),
             ],
-            if (actionLabel != null && onAction != null) ...[
+            if (shownAction != null && onAction != null) ...[
               const SizedBox(height: 24),
-              FilledButton(onPressed: onAction, child: Text(actionLabel!)),
+              FilledButton(onPressed: onAction, child: Text(shownAction)),
             ],
           ],
         ),

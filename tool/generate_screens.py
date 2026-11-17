@@ -7,6 +7,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from screens_data import SCREENS, AREA_LABELS  # noqa: E402
+from screens_bn import BN  # noqa: E402
 
 ACCESS = {"public": "ScreenAccess.public", "signedIn": "ScreenAccess.signedIn", "permission": "ScreenAccess.permission"}
 HUB = {"explore": "HubTab.explore", "create": "HubTab.create", "mySports": "HubTab.mySports"}
@@ -27,6 +28,8 @@ def dart_entry(s):
         f"    icon: Icons.{icon},",
         f"    step: '{step}',",
         f"    description: '{esc(desc)}',",
+        f"    titleBn: '{esc(BN[sid][0])}',",
+        f"    descriptionBn: '{esc(BN[sid][1])}',",
     ]
     if access != "public":
         lines.append(f"    access: {ACCESS[access]},")

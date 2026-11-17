@@ -11,7 +11,8 @@ void main() {
   late SharedPreferences prefs;
 
   setUpAll(() async {
-    SharedPreferences.setMockInitialValues(<String, Object>{});
+    // These tests read English texts, so the language is set to English.
+    SharedPreferences.setMockInitialValues(<String, Object>{'language_v1': 'en'});
     prefs = await SharedPreferences.getInstance();
   });
 

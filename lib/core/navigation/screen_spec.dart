@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../auth/permission.dart';
+import '../l10n/app_language.dart';
 
 /// Who may open a screen.
 enum ScreenAccess {
@@ -63,6 +64,8 @@ class ScreenSpec {
     required this.icon,
     required this.step,
     required this.description,
+    required this.titleBn,
+    required this.descriptionBn,
     this.access = ScreenAccess.public,
     this.permission,
     this.hub,
@@ -83,6 +86,10 @@ class ScreenSpec {
   /// Roadmap step that builds the real screen, for example `1.3` or `1B.1`.
   final String step;
   final String description;
+
+  /// Bangla title and description. Shown when the app language is Bangla.
+  final String titleBn;
+  final String descriptionBn;
   final ScreenAccess access;
   final Permission? permission;
   final HubTab? hub;
@@ -93,6 +100,12 @@ class ScreenSpec {
       RegExp(r':(\w+)').allMatches(path).map((m) => m.group(1)!).toList();
 
   bool get isBuilt => status == ScreenStatus.built;
+
+  String titleFor(AppLanguage language) =>
+      language == AppLanguage.bangla ? titleBn : title;
+
+  String descriptionFor(AppLanguage language) =>
+      language == AppLanguage.bangla ? descriptionBn : description;
 
   /// Tournament permissions are checked against the `:id` in the path.
   bool get isTournamentScoped =>

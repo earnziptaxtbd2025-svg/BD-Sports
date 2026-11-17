@@ -14,6 +14,7 @@ import '../../features/my_sports/presentation/my_sports_page.dart';
 import '../../features/navigation/presentation/no_access_page.dart';
 import '../../features/navigation/presentation/not_found_page.dart';
 import '../../features/navigation/presentation/planned_screen_page.dart';
+import '../../features/profile/presentation/language_settings_page.dart';
 import '../../features/profile/presentation/privacy_settings_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
 import '../../features/shell/presentation/main_shell.dart';
@@ -39,6 +40,7 @@ const Set<String> _handWrittenPaths = <String>{
   AppRoutes.mySports,
   AppRoutes.profile,
   AppRoutes.privacy,
+  AppRoutes.language,
   AppRoutes.signIn,
   AppRoutes.noAccess,
 };
@@ -127,6 +129,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.privacy,
         builder: (context, state) => const PrivacySettingsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.language,
+        builder: (context, state) => const LanguageSettingsPage(),
       ),
       ...generatedRoutes,
       if (Env.devToolsEnabled) ...[

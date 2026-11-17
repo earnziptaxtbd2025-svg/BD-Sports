@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/widgets/home_button_if_root.dart';
 import '../../../core/widgets/state_view.dart';
@@ -9,20 +10,20 @@ import '../../../core/widgets/state_view.dart';
 class NoAccessPage extends StatelessWidget {
   const NoAccessPage({super.key});
 
-  static const String message = 'You do not have access to this screen.';
-
   @override
   Widget build(BuildContext context) {
+    final s = context.s;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('No access'),
+        title: Text(s.noAccessTitle),
         leading: homeButtonIfRoot(context),
       ),
       body: StateView(
         icon: Icons.lock_outline,
-        title: message,
-        message: 'Ask the organizer for permission, or sign in with another account.',
-        actionLabel: 'Go to Home',
+        title: s.noAccessMessage,
+        message: s.noAccessHint,
+        actionLabel: s.goHome,
         onAction: () => context.go(AppRoutes.home),
       ),
     );

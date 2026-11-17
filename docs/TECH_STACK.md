@@ -32,4 +32,5 @@ document database.
 | Secure token storage (flutter_secure_storage) | Step 1.1 | Added together with sign-in, where it is first needed |
 | Public web pages | Step 0.10 (done) | Plain HTML/CSS/JS on Cloudflare Pages, no framework, tiny pages. Details in docs/PUBLIC_PAGES.md |
 | Payments | Step 5.5 | bKash / Nagad merchant APIs |
-| Bangla font and l10n | Step 0.4 | Bundle a Bangla font so text looks the same on every phone |
+| Bangla and English | Step 0.4 (done) | Typed text lists (no code generation) so a missing translation cannot compile. See docs/LANGUAGES.md |
+| Bundled Bangla font | Step 0.5 | Only if some phones show empty boxes. Needs a font file |

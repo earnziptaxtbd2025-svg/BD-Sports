@@ -23,10 +23,24 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      # Uses the newest stable Flutter. To lock it, add a repository variable named
+      # FLUTTER_VERSION (Settings, Secrets and variables, Actions, Variables), for
+      # example 3.47.1. The version used is shown on the run's Summary page.
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: ${{ vars.FLUTTER_VERSION || 'any' }}
           cache: true
+
+      - name: Show Flutter version
+        run: |
+          flutter --version
+          {
+            echo '### Tool versions'
+            echo '```'
+            flutter --version
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       # The android/ folder is generated here, so the repo only holds our own code.
       - name: Generate Android platform files
@@ -97,9 +111,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Non-blocking for now so the first APK always builds. Make these strict later.
+      # Non-blocking for now so the APK always builds. Notes of type "info" (for
+      # example "this import is deprecated") no longer count as a failure; real
+      # warnings and errors still show up. Make these strict later.
       - name: Analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
         continue-on-error: true
 
       - name: Test

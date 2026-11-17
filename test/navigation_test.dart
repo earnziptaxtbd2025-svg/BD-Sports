@@ -2,25 +2,28 @@ import 'package:bd_sports/app.dart';
 import 'package:bd_sports/core/auth/account_role.dart';
 import 'package:bd_sports/core/auth/current_user_provider.dart';
 import 'package:bd_sports/core/auth/tournament_role.dart';
+import 'package:bd_sports/core/l10n/strings_en.dart';
 import 'package:bd_sports/core/navigation/screen_registry.dart';
 import 'package:bd_sports/core/navigation/screens.dart';
 import 'package:bd_sports/core/network/connectivity_providers.dart';
 import 'package:bd_sports/core/router/app_router.dart';
 import 'package:bd_sports/core/storage/shared_preferences_provider.dart';
 import 'package:bd_sports/features/dev_tools/presentation/screen_map_page.dart';
-import 'package:bd_sports/features/navigation/presentation/no_access_page.dart';
-import 'package:bd_sports/features/navigation/presentation/not_found_page.dart';
 import 'package:bd_sports/features/navigation/presentation/planned_screen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final String noAccessText = const EnglishStrings().noAccessMessage;
+final String notFoundText = const EnglishStrings().pageNotFoundMessage;
+
 void main() {
   late SharedPreferences prefs;
 
   setUpAll(() async {
-    SharedPreferences.setMockInitialValues(<String, Object>{});
+    // These tests read English texts, so the language is set to English.
+    SharedPreferences.setMockInitialValues(<String, Object>{'language_v1': 'en'});
     prefs = await SharedPreferences.getInstance();
   });
 
@@ -65,14 +68,14 @@ void main() {
     user.signInAs(AccountRole.member);
 
     await open(tester, c, '/t/abcd2345/manage');
-    expect(find.text(NoAccessPage.message), findsOneWidget);
+    expect(find.text(noAccessText), findsOneWidget);
 
     user.toggleTournamentRole('abcd2345', TournamentRole.organizer);
     await open(tester, c, '/t/abcd2345/manage');
     expect(find.byType(PlannedScreenPage), findsOneWidget);
 
     await open(tester, c, '/t/efgh6789/manage');
-    expect(find.text(NoAccessPage.message), findsOneWidget);
+    expect(find.text(noAccessText), findsOneWidget);
   });
 
   testWidgets('a suspended account cannot open signed-in screens', (tester) async {
@@ -81,7 +84,7 @@ void main() {
     user.signInAs(AccountRole.member);
     user.setSuspended(true);
     await open(tester, c, '/my-sports/teams');
-    expect(find.text(NoAccessPage.message), findsOneWidget);
+    expect(find.text(noAccessText), findsOneWidget);
   });
 
   testWidgets('admin screens follow the role', (tester) async {
@@ -96,7 +99,7 @@ void main() {
     expect(find.byType(PlannedScreenPage), findsOneWidget);
 
     await open(tester, c, '/admin/audit');
-    expect(find.text(NoAccessPage.message), findsOneWidget);
+    expect(find.text(noAccessText), findsOneWidget);
   });
 
   testWidgets('signing out closes a protected screen', (tester) async {
@@ -114,7 +117,7 @@ void main() {
   testWidgets('an unknown address shows a friendly page', (tester) async {
     final c = await start(tester);
     await open(tester, c, '/no/such/place');
-    expect(find.text(NotFoundPage.message), findsOneWidget);
+    expect(find.text(notFoundText), findsOneWidget);
   });
 
   testWidgets('a hub tile opens its screen', (tester) async {
@@ -139,8 +142,8 @@ void main() {
         continue;
       }
       await open(tester, c, Screens.samplePath(spec));
-      expect(find.text(NotFoundPage.message), findsNothing, reason: spec.path);
-      expect(find.text(NoAccessPage.message), findsNothing, reason: spec.path);
+      expect(find.text(notFoundText), findsNothing, reason: spec.path);
+      expect(find.text(noAccessText), findsNothing, reason: spec.path);
       expect(tester.takeException(), isNull, reason: spec.path);
     }
   });

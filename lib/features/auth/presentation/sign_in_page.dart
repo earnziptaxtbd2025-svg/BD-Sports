@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/auth/account_role.dart';
 import '../../../core/auth/current_user_provider.dart';
 import '../../../core/config/env.dart';
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/route_guard.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/widgets/home_button_if_root.dart';
@@ -20,10 +21,11 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final s = context.s;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in'),
+        title: Text(s.signIn),
         leading: homeButtonIfRoot(context),
       ),
       body: ListView(
@@ -32,7 +34,7 @@ class SignInPage extends ConsumerWidget {
           Icon(Icons.login, size: 56, color: theme.colorScheme.primary),
           const SizedBox(height: 16),
           Text(
-            'Sign-in is built in Step 1.1.',
+            s.signInComingSoon,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyLarge,
           ),
@@ -55,7 +57,7 @@ class SignInPage extends ConsumerWidget {
           const SizedBox(height: 16),
           TextButton(
             onPressed: () => context.go(AppRoutes.home),
-            child: const Text('Continue without signing in'),
+            child: Text(s.continueWithoutSigningIn),
           ),
         ],
       ),

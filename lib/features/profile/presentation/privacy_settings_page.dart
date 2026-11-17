@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/privacy/privacy_settings.dart';
 
 class PrivacySettingsPage extends ConsumerWidget {
@@ -9,64 +10,61 @@ class PrivacySettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final s = context.s;
     final settings = ref.watch(privacySettingsProvider);
     final notifier = ref.read(privacySettingsProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Privacy settings')),
+      appBar: AppBar(title: Text(s.privacyTitle)),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
-          const _SectionTitle('Who can see'),
+          _SectionTitle(s.privacyWhoCanSee),
           _AudienceTile(
-            title: 'Phone number',
+            title: s.privacyPhone,
             value: settings.phone,
             onChanged: (value) => notifier.update(settings.copyWith(phone: value)),
           ),
           _AudienceTile(
-            title: 'Age',
+            title: s.privacyAge,
             value: settings.age,
             onChanged: (value) => notifier.update(settings.copyWith(age: value)),
           ),
           _AudienceTile(
-            title: 'Profile photo',
+            title: s.privacyPhoto,
             value: settings.photo,
             onChanged: (value) => notifier.update(settings.copyWith(photo: value)),
           ),
-          const _SectionTitle('Contact'),
+          _SectionTitle(s.privacyContact),
           _AudienceTile(
-            title: 'Who can message me',
+            title: s.privacyWhoCanMessage,
             value: settings.messages,
             onChanged: (value) =>
                 notifier.update(settings.copyWith(messages: value)),
           ),
           SwitchListTile(
-            title: const Text('People can find me by phone number'),
+            title: Text(s.privacyFindByPhone),
             value: settings.findableByPhone,
             onChanged: (value) =>
                 notifier.update(settings.copyWith(findableByPhone: value)),
           ),
-          const _SectionTitle('Players'),
+          _SectionTitle(s.privacyPlayers),
           SwitchListTile(
-            title: const Text('Show me in talent search'),
-            subtitle: const Text('Clubs and academies can find your profile.'),
+            title: Text(s.privacyTalentSearch),
+            subtitle: Text(s.privacyTalentSearchHint),
             value: settings.showInTalentSearch,
             onChanged: (value) =>
                 notifier.update(settings.copyWith(showInTalentSearch: value)),
           ),
           SwitchListTile(
-            title: const Text('Show my match statistics'),
+            title: Text(s.privacyShowStats),
             value: settings.showStats,
             onChanged: (value) =>
                 notifier.update(settings.copyWith(showStats: value)),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(
-              'These choices are saved on this phone for now. They will be linked '
-              'to your account when sign-in is added.',
-              style: theme.textTheme.bodySmall,
-            ),
+            child: Text(s.privacyFooter, style: theme.textTheme.bodySmall),
           ),
         ],
       ),
@@ -106,6 +104,8 @@ class _AudienceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.s;
+
     return ListTile(
       title: Text(title),
       trailing: DropdownButton<Audience>(
@@ -120,7 +120,7 @@ class _AudienceTile extends StatelessWidget {
           for (final audience in Audience.values)
             DropdownMenuItem<Audience>(
               value: audience,
-              child: Text(audience.label),
+              child: Text(s.audience(audience)),
             ),
         ],
       ),

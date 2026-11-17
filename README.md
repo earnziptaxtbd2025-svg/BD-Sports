@@ -5,8 +5,8 @@ Tournament marketplace, tournament management, and sports community in one app.
 
 Status: Steps 0.1 (Tech stack), 0.6 (GitHub and APK pipeline), 0.7 (Roles and
 permissions), 0.8 (Offline-first architecture), 0.9 (Security foundation) and 0.10
-(Public pages and share links) and 0.3 (Screens and navigation) written.
-Next: Step 0.4 (Bangla and English).
+(Public pages and share links), 0.3 (Screens and navigation) and 0.4 (Bangla and
+English) written. Next: Step 0.5 (Design System).
 
 Project decision: the database and backend connection are built **last**, after all
 screens and features. Until then screens use in-memory sample data behind repository
@@ -24,6 +24,7 @@ lib/
     security/ privacy/      Validation, log scrubbing, rate limit, audit, privacy settings (see docs/SECURITY.md)
     public_links/           Share link builder and reader, short ids (see docs/PUBLIC_PAGES.md)
     navigation/             Screen list (105 screens), access guard, address checks (see docs/SCREENS.md)
+    l10n/                   Bangla and English texts, number/money/date formats (see docs/LANGUAGES.md)
     widgets/                Shared widgets: state view, permission gate, sync banner
     storage/                Shared local storage provider
     config/env.dart         Build-time config (--dart-define)
@@ -45,6 +46,7 @@ docs/OFFLINE.md             Offline-first rules, pieces and how to test
 docs/SECURITY.md            Full security plan with status of every item
 docs/PUBLIC_PAGES.md        Share links, public pages, what they may show
 docs/SCREENS.md             All screens, navigation rules, access, layouts
+docs/LANGUAGES.md           Bangla and English: how it works, style guide, word list
 tool/                       Screen list source and generator (python3 tool/generate_screens.py)
 SECURITY.md                 How to report a security problem
 .github/workflows/          APK build pipeline
@@ -81,6 +83,14 @@ The public web pages live in `web_public/` (see `web_public/README.md`). To make
 app build full share links and open them, add the repository variable
 `PUBLIC_BASE_URL` (Settings, Secrets and variables, Actions, Variables). Details and
 limits are in `docs/PUBLIC_PAGES.md`.
+
+## Flutter version
+
+Builds use the newest stable Flutter. The run's Summary page shows which version was
+used ("Tool versions"). To lock it so a Flutter update can never break a build by
+surprise, add the repository variable `FLUTTER_VERSION` (Settings, Secrets and
+variables, Actions, Variables) with that version, for example `3.47.1`. Remove the
+variable to go back to the newest.
 
 ## Production build
 

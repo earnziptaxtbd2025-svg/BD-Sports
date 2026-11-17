@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/auth/current_user_provider.dart';
 import '../../../core/config/env.dart';
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/screen_spec.dart';
 import '../../../core/navigation/screens.dart';
 import '../../../core/router/app_routes.dart';
@@ -14,25 +15,24 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final s = context.s;
     final user = ref.watch(currentUserProvider);
     final settings = Screens.forArea(ScreenArea.settings);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(title: Text(s.tabProfile)),
       body: ListView(
         children: [
           ListTile(
             leading: const CircleAvatar(child: Icon(Icons.person_outline)),
-            title: Text(user?.displayName ?? 'Not signed in'),
+            title: Text(user?.displayName ?? s.notSignedIn),
             subtitle: Text(
-              user == null
-                  ? 'Sign-in is built in Step 1.1.'
-                  : user.accountRole.label,
+              user == null ? s.signInComingSoon : s.accountRole(user.accountRole),
             ),
             trailing: user == null
                 ? TextButton(
                     onPressed: () => context.push(AppRoutes.signIn),
-                    child: const Text('Sign in'),
+                    child: Text(s.signIn),
                   )
                 : null,
           ),
@@ -40,11 +40,11 @@ class ProfilePage extends ConsumerWidget {
           for (final spec in settings)
             ListTile(
               leading: Icon(spec.icon, color: theme.colorScheme.primary),
-              title: Text(spec.title),
-              subtitle: Text(spec.description),
+              title: Text(spec.titleFor(s.language)),
+              subtitle: Text(spec.descriptionFor(s.language)),
               trailing: spec.isBuilt
                   ? const Icon(Icons.chevron_right)
-                  : Text('Step ${spec.step}', style: theme.textTheme.labelSmall),
+                  : Text(s.stepLabel(spec.step), style: theme.textTheme.labelSmall),
               onTap: () => context.push(spec.path),
             ),
           if (Env.devToolsEnabled) ...[

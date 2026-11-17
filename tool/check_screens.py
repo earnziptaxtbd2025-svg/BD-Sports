@@ -8,6 +8,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from screens_data import SCREENS  # noqa: E402
+from screens_bn import BN  # noqa: E402
 
 problems = []
 ids = [s[0] for s in SCREENS]
@@ -16,6 +17,18 @@ if len(set(ids)) != len(ids):
     problems.append("duplicate screen ids")
 if len(set(paths)) != len(paths):
     problems.append("duplicate screen paths")
+
+bangla = re.compile(r"[\u0980-\u09FF]")
+for sid in ids:
+    if sid not in BN:
+        problems.append(f"{sid}: missing Bangla text in tool/screens_bn.py")
+        continue
+    for part in BN[sid]:
+        if not bangla.search(part):
+            problems.append(f"{sid}: Bangla text has no Bangla letters: {part}")
+for sid in BN:
+    if sid not in ids:
+        problems.append(f"{sid}: Bangla text for an unknown screen")
 
 dart = open(os.path.join(ROOT, "lib/core/navigation/screen_registry.dart")).read()
 doc = open(os.path.join(ROOT, "docs/SCREENS.md")).read()

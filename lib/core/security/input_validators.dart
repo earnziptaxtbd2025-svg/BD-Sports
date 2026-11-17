@@ -1,7 +1,10 @@
+import 'validation_issue.dart';
+
 /// Checks and cleans text typed by users. Used before saving or sending anything.
 ///
-/// These checks protect the app and give friendly messages. The server must repeat
-/// every check, because anyone can bypass a phone app.
+/// These checks protect the app. They return a [ValidationIssue], which the screen
+/// turns into a message in the current language (see `AppStrings.validation`).
+/// The server must repeat every check, because anyone can bypass a phone app.
 class InputValidators {
   const InputValidators._();
 
@@ -56,44 +59,44 @@ class InputValidators {
     return text;
   }
 
-  static String? validatePhone(String? value) {
+  static ValidationIssue? validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Enter a mobile number.';
+      return ValidationIssue.phoneRequired;
     }
     if (normalizeBdPhone(value) == null) {
-      return 'Enter a valid Bangladesh mobile number, like 01712345678.';
+      return ValidationIssue.phoneInvalid;
     }
     return null;
   }
 
-  static String? validatePersonName(String? value) {
+  static ValidationIssue? validatePersonName(String? value) {
     final text = sanitizeText(value ?? '', maxLength: 200);
     if (text.length < 2) {
-      return 'Name is too short.';
+      return ValidationIssue.nameTooShort;
     }
     if (text.length > 60) {
-      return 'Name is too long (maximum 60 letters).';
+      return ValidationIssue.nameTooLong;
     }
     final allowed = RegExp(
       r"^[\p{L}\p{M}\u200C\u200D\s.\-']+$",
       unicode: true,
     );
     if (!allowed.hasMatch(text)) {
-      return 'Name can only have letters, spaces, dot, dash and apostrophe.';
+      return ValidationIssue.nameInvalidChars;
     }
     return null;
   }
 
-  static String? validateTournamentTitle(String? value) {
+  static ValidationIssue? validateTournamentTitle(String? value) {
     final text = sanitizeText(value ?? '', maxLength: 300);
     if (text.length < 3) {
-      return 'Title is too short.';
+      return ValidationIssue.titleTooShort;
     }
     if (text.length > 80) {
-      return 'Title is too long (maximum 80 characters).';
+      return ValidationIssue.titleTooLong;
     }
     if (!RegExp(r'[\p{L}\p{N}]', unicode: true).hasMatch(text)) {
-      return 'Title needs letters or numbers.';
+      return ValidationIssue.titleNeedsLetters;
     }
     return null;
   }
@@ -108,12 +111,12 @@ class InputValidators {
     return value > maxAmountBdt ? null : value;
   }
 
-  static String? validateAmountBdt(String? value) {
+  static ValidationIssue? validateAmountBdt(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Enter an amount.';
+      return ValidationIssue.amountRequired;
     }
     if (parseAmountBdt(value) == null) {
-      return 'Enter a whole amount in taka (0 to 10,000,000).';
+      return ValidationIssue.amountInvalid;
     }
     return null;
   }

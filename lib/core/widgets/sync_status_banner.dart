@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/app_strings.dart';
 import '../network/connectivity_providers.dart';
 import '../sync/outbox.dart';
 import '../sync/sync_engine.dart';
@@ -13,10 +14,11 @@ class SyncStatusBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
+    final s = context.s;
     final online = ref.watch(isOnlineProvider);
     final pending = ref.watch(pendingCountProvider);
     final failed = ref.watch(failedCountProvider);
-    final syncing = ref.watch(syncEngineProvider.select((s) => s.isSyncing));
+    final syncing = ref.watch(syncEngineProvider.select((state) => state.isSyncing));
 
     String? message;
     IconData icon = Icons.info_outline;
@@ -25,22 +27,20 @@ class SyncStatusBanner extends ConsumerWidget {
 
     if (!online) {
       icon = Icons.cloud_off_outlined;
-      message = pending > 0
-          ? 'Offline. $pending change(s) saved on this phone, will sync automatically.'
-          : 'You are offline. Saved changes will sync when the internet is back.';
+      message = pending > 0 ? s.offlineWithPending(pending) : s.offlineNoPending;
     } else if (syncing) {
       icon = Icons.sync;
-      message = 'Syncing...';
+      message = s.syncing;
       background = scheme.primaryContainer;
       foreground = scheme.onPrimaryContainer;
     } else if (failed > 0) {
       icon = Icons.error_outline;
-      message = '$failed change(s) could not be saved.';
+      message = s.changesFailed(failed);
       background = scheme.errorContainer;
       foreground = scheme.onErrorContainer;
     } else if (pending > 0) {
       icon = Icons.schedule;
-      message = '$pending change(s) waiting to sync.';
+      message = s.changesWaiting(pending);
     }
 
     if (message == null) {

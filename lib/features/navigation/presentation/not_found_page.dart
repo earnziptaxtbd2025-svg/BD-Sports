@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/widgets/state_view.dart';
 
@@ -8,16 +9,16 @@ import '../../../core/widgets/state_view.dart';
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});
 
-  static const String message = 'This page does not exist.';
-
   @override
   Widget build(BuildContext context) {
+    final s = context.s;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Not found')),
+      appBar: AppBar(title: Text(s.pageNotFoundTitle)),
       body: StateView(
         icon: Icons.search_off,
-        title: message,
-        actionLabel: 'Go to Home',
+        title: s.pageNotFoundMessage,
+        actionLabel: s.goHome,
         onAction: () => context.go(AppRoutes.home),
       ),
     );

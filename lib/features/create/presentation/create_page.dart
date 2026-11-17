@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/screen_spec.dart';
 import '../../navigation/presentation/hub_page.dart';
 
@@ -8,10 +9,11 @@ class CreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HubPage(
-      title: 'Create',
+    final s = context.s;
+    return HubPage(
+      title: s.tabCreate,
       hub: HubTab.create,
-      intro: 'Start a tournament, team, club or profile.',
+      intro: s.createIntro,
     );
   }
 }

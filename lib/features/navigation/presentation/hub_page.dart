@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/screen_spec.dart';
 import '../../../core/navigation/screens.dart';
 
@@ -21,6 +22,7 @@ class HubPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = context.s;
     final items = Screens.forHub(hub);
 
     return Scaffold(
@@ -34,8 +36,8 @@ class HubPage extends StatelessWidget {
           for (final spec in items)
             ListTile(
               leading: Icon(spec.icon, color: theme.colorScheme.primary),
-              title: Text(spec.title),
-              subtitle: Text(spec.description),
+              title: Text(spec.titleFor(s.language)),
+              subtitle: Text(spec.descriptionFor(s.language)),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -47,7 +49,7 @@ class HubPage extends StatelessWidget {
                     ),
                   if (!spec.isBuilt) ...[
                     const SizedBox(width: 6),
-                    Text('Step ${spec.step}', style: theme.textTheme.labelSmall),
+                    Text(s.stepLabel(spec.step), style: theme.textTheme.labelSmall),
                   ],
                 ],
               ),
