@@ -18,4 +18,5 @@ class AppRoutes {
   static const String devSync = '/dev/sync';
   static const String devLinks = '/dev/links';
   static const String devScreens = '/dev/screens';
+  static const String devDesign = '/dev/design';
 }

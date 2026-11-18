@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/sign_in_page.dart';
 import '../../features/create/presentation/create_page.dart';
+import '../../features/dev_tools/presentation/design_gallery_page.dart';
 import '../../features/dev_tools/presentation/public_link_tester_page.dart';
 import '../../features/dev_tools/presentation/role_tester_page.dart';
 import '../../features/dev_tools/presentation/screen_map_page.dart';
@@ -151,6 +152,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: AppRoutes.devScreens,
           builder: (context, state) => const ScreenMapPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.devDesign,
+          builder: (context, state) => const DesignGalleryPage(),
         ),
       ],
     ],

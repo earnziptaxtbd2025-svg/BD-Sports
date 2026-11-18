@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/app_strings.dart';
+import '../../../core/widgets/neon_bottom_nav.dart';
 import '../../../core/widgets/sync_status_banner.dart';
 
 /// Bottom navigation: Home, Explore, Create, My Sports, Profile.
@@ -21,37 +22,30 @@ class MainShell extends StatelessWidget {
           const SyncStatusBanner(),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: NeonBottomNav(
         selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
+        centerIndex: 2,
+        onChanged: (index) => navigationShell.goBranch(
           index,
           initialLocation: index == navigationShell.currentIndex,
         ),
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: const Icon(Icons.home),
+        items: [
+          NeonNavItem(
             label: s.tabHome,
+            icon: Icons.home_outlined,
+            selectedIcon: Icons.home,
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.search),
-            selectedIcon: const Icon(Icons.search),
-            label: s.tabExplore,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.add_circle_outline),
-            selectedIcon: const Icon(Icons.add_circle),
-            label: s.tabCreate,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.emoji_events_outlined),
-            selectedIcon: const Icon(Icons.emoji_events),
+          NeonNavItem(label: s.tabExplore, icon: Icons.search),
+          NeonNavItem(label: s.tabCreate, icon: Icons.add),
+          NeonNavItem(
             label: s.tabMySports,
+            icon: Icons.emoji_events_outlined,
+            selectedIcon: Icons.emoji_events,
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_outline),
-            selectedIcon: const Icon(Icons.person),
+          NeonNavItem(
             label: s.tabProfile,
+            icon: Icons.person_outline,
+            selectedIcon: Icons.person,
           ),
         ],
       ),

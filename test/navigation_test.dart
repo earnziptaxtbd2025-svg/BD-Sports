@@ -1,3 +1,4 @@
+import 'package:bd_sports/core/widgets/neon_bottom_nav.dart';
 import 'package:bd_sports/app.dart';
 import 'package:bd_sports/core/auth/account_role.dart';
 import 'package:bd_sports/core/auth/current_user_provider.dart';
@@ -123,7 +124,7 @@ void main() {
   testWidgets('a hub tile opens its screen', (tester) async {
     await start(tester);
     await tester.tap(
-      find.descendant(of: find.byType(NavigationBar), matching: find.text('Explore')),
+      find.descendant(of: find.byType(NeonBottomNav), matching: find.text('Explore')),
     );
     await tester.pumpAndSettle();
 

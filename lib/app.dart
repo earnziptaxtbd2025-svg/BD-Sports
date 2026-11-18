@@ -25,10 +25,11 @@ class BdSportsApp extends ConsumerWidget {
       title: Env.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      // Light (white and green) for everyone. Dark mode becomes a user setting in
-      // Step 1B.13, so the app does not change just because the phone is in dark mode.
-      themeMode: ThemeMode.light,
+      darkTheme: AppTheme.neonNight(),
+      // The approved design is the dark neon "stadium night" look, so it is the
+      // default. The light theme stays available. Choosing between them becomes a
+      // user setting in Step 1B.13.
+      themeMode: ThemeMode.dark,
       locale: language.locale,
       supportedLocales: [
         for (final item in AppLanguage.values) item.locale,

@@ -1,3 +1,4 @@
+import 'package:bd_sports/core/widgets/neon_bottom_nav.dart';
 import 'package:bd_sports/app.dart';
 import 'package:bd_sports/core/auth/account_role.dart';
 import 'package:bd_sports/core/auth/permission.dart';
@@ -165,7 +166,7 @@ void main() {
       router.go('/home');
       await tester.pumpAndSettle();
       expect(
-        find.descendant(of: find.byType(NavigationBar), matching: find.text('Home')),
+        find.descendant(of: find.byType(NeonBottomNav), matching: find.text('Home')),
         findsOneWidget,
       );
       expect(prefs.getString('language_v1'), 'en');

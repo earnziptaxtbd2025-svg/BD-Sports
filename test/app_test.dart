@@ -1,3 +1,4 @@
+import 'package:bd_sports/core/widgets/neon_bottom_nav.dart';
 import 'package:bd_sports/app.dart';
 import 'package:bd_sports/core/network/connectivity_providers.dart';
 import 'package:bd_sports/core/router/app_router.dart';
@@ -30,7 +31,14 @@ void main() {
     await tester.pumpWidget(buildApp());
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationDestination), findsNWidgets(5));
+    expect(find.byType(NeonBottomNav), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(NeonBottomNav),
+        matching: find.byType(InkWell),
+      ),
+      findsNWidgets(5),
+    );
   });
 
   testWidgets('switches to the Explore tab', (tester) async {
@@ -39,7 +47,7 @@ void main() {
 
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
+        of: find.byType(NeonBottomNav),
         matching: find.text('Explore'),
       ),
     );

@@ -64,6 +64,13 @@ class ProfilePage extends ConsumerWidget {
               onTap: () => context.push(AppRoutes.devScreens),
             ),
             ListTile(
+              leading: const Icon(Icons.palette_outlined),
+              title: const Text('Design gallery'),
+              subtitle: const Text('Developer tool, removed in the final release.'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push(AppRoutes.devDesign),
+            ),
+            ListTile(
               leading: const Icon(Icons.link),
               title: const Text('Public link tester'),
               subtitle: const Text('Developer tool, removed in the final release.'),

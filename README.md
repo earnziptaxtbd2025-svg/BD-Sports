@@ -6,7 +6,7 @@ Tournament marketplace, tournament management, and sports community in one app.
 Status: Steps 0.1 (Tech stack), 0.6 (GitHub and APK pipeline), 0.7 (Roles and
 permissions), 0.8 (Offline-first architecture), 0.9 (Security foundation) and 0.10
 (Public pages and share links), 0.3 (Screens and navigation) and 0.4 (Bangla and
-English) written. Next: Step 0.5 (Design System).
+English) written. Step 0.5 (Design System) all 4 parts written, waiting for the phone check (see docs/DESIGN_SYSTEM.md).
 
 Project decision: the database and backend connection are built **last**, after all
 screens and features. Until then screens use in-memory sample data behind repository
@@ -47,6 +47,7 @@ docs/SECURITY.md            Full security plan with status of every item
 docs/PUBLIC_PAGES.md        Share links, public pages, what they may show
 docs/SCREENS.md             All screens, navigation rules, access, layouts
 docs/LANGUAGES.md           Bangla and English: how it works, style guide, word list
+docs/DESIGN_SYSTEM.md       Design system parts, colour and layout rules
 tool/                       Screen list source and generator (python3 tool/generate_screens.py)
 SECURITY.md                 How to report a security problem
 .github/workflows/          APK build pipeline
@@ -104,6 +105,6 @@ version that includes them.
   workflow adds the internet permission and sets the app name.
 - Release APKs are signed with the debug key. That is fine for testing. A proper keystore
   is needed before Google Play (see docs/SECURITY.md).
-- The app uses a light (white and green) theme. Dark mode arrives as a setting in Step 1B.13.
+- The app defaults to the dark neon "stadium night" theme from the approved design. The light theme is kept. A user setting arrives in Step 1B.13.
 - Analyze and test steps are non-blocking for now. Make them strict once the first
   build is green.
