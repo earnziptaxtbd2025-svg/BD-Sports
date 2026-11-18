@@ -100,8 +100,7 @@ void main() {
     });
 
     test('palette blends between dark and light', () {
-      final AppPalette mid =
-          AppPalette.dark.lerp(AppPalette.light, 1) as AppPalette;
+      final AppPalette mid = AppPalette.dark.lerp(AppPalette.light, 1);
       expect(mid.bgBase, AppPalette.light.bgBase);
       expect(mid.isDark, isFalse);
     });
