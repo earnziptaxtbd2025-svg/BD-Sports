@@ -149,6 +149,48 @@ class EnglishStrings extends AppStrings {
   String get appearanceSystem => 'Same as phone';
 
   @override
+  String get homeBannerTitle => 'Create Your Own Tournament!';
+
+  @override
+  String get homeBannerBody => 'Bring your sports event to life.';
+
+  @override
+  String get actionCreateTournament => 'Create Tournament';
+
+  @override
+  String get quickDiscoverTitle => 'Discover Tournaments';
+
+  @override
+  String get quickDiscoverBody => 'Find and join';
+
+  @override
+  String get quickCreateBody => 'Start your event';
+
+  @override
+  String get quickJoinTitle => 'Join Tournament';
+
+  @override
+  String get quickJoinBody => 'Be a part';
+
+  @override
+  String get trendingTitle => 'Trending Tournaments';
+
+  @override
+  String get liveMatchesTitle => 'Live Matches';
+
+  @override
+  String get seeAll => 'See All';
+
+  @override
+  String get searchHint => 'Search tournaments...';
+
+  @override
+  String get trendingEmpty => 'Popular tournaments will show here.';
+
+  @override
+  String get liveEmpty => 'Matches being played now will show here.';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

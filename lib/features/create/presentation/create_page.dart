@@ -14,6 +14,8 @@ class CreatePage extends StatelessWidget {
       title: s.tabCreate,
       hub: HubTab.create,
       intro: s.createIntro,
+      icon: Icons.add_circle_outline,
+      highlightFirst: true,
     );
   }
 }

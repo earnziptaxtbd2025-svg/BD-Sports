@@ -108,6 +108,22 @@ abstract class AppStrings {
   String get appearanceLight;
   String get appearanceSystem;
 
+  // ---- Home and tab screens ----
+  String get homeBannerTitle;
+  String get homeBannerBody;
+  String get actionCreateTournament;
+  String get quickDiscoverTitle;
+  String get quickDiscoverBody;
+  String get quickCreateBody;
+  String get quickJoinTitle;
+  String get quickJoinBody;
+  String get trendingTitle;
+  String get liveMatchesTitle;
+  String get seeAll;
+  String get searchHint;
+  String get trendingEmpty;
+  String get liveEmpty;
+
   // ---- Names of enum values ----
   String permission(Permission permission);
   String accountRole(AccountRole role);
@@ -143,6 +159,20 @@ abstract class AppStrings {
         languageTitle, languageIntro,
         appearanceTitle, appearanceIntro, appearanceDark, appearanceLight,
         appearanceSystem,
+        homeBannerTitle,
+        homeBannerBody,
+        actionCreateTournament,
+        quickDiscoverTitle,
+        quickDiscoverBody,
+        quickCreateBody,
+        quickJoinTitle,
+        quickJoinBody,
+        trendingTitle,
+        liveMatchesTitle,
+        seeAll,
+        searchHint,
+        trendingEmpty,
+        liveEmpty,
       ];
 }
 

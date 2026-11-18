@@ -14,6 +14,8 @@ class ExplorePage extends StatelessWidget {
       title: s.tabExplore,
       hub: HubTab.explore,
       intro: s.exploreIntro,
+      icon: Icons.explore_outlined,
+      showSearch: true,
     );
   }
 }

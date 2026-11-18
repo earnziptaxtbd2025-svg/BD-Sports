@@ -9,7 +9,8 @@ four parts so each part can be tested on a phone before the next begins.
 | 2 | Glass card, neon buttons (green, blue, purple, red, outline), tab bar, badges, input field (`lib/core/widgets/`) | Written |
 | 3 | LIVE badge, score header, stat bars, stepper, bottom navigation with raised centre button | Written |
 | 4 | Bottom navigation connected, image slots, logo, Design Gallery screen, tests | Written |
-| 5 | Dark and light looks, Profile > Appearance switch | Written |
+| 5 | Dark and light looks, Profile > Appearance switch | Written, checked on phone |
+| 6 | The five main tabs in the card look (Home, Explore, Create, My Sports, Profile) | Written |
 
 ## Rules
 
@@ -88,3 +89,24 @@ raw `AppColors` value. Take it from `context.palette`. Text on coloured button f
 (green, blue, purple, red) stays white in both looks.
 
 Tests: `test/light_dark_test.dart`.
+
+## Part 6: the five main tabs
+
+Same look as the approved PDF, in dark and light. Real data arrives in later steps, so
+Home shows empty cards until Step 1.5 (tournaments) and Step 2.4 (live matches).
+
+| Widget (`lib/core/widgets/`) | Use |
+|---|---|
+| `BrandAppBar` | Header: logo, title, notification bell. Extra buttons go before the bell. |
+| `SearchEntryBar` | Search box look that opens the search screen. |
+| `PromoBanner` | Trophy banner with a headline and one button (Home). |
+| `QuickActionCard` | Blue, green or purple action card (Home: Discover, Create, Join). |
+| `SectionHeader` | Section title with an optional "See All" link. |
+| `EmptyStateCard` | "Nothing here yet" card with an optional step badge. |
+| `GlassTile` | Row card: icon, title, description, right side. |
+| `ScreenTile` | `GlassTile` that opens a screen from the screen list. Shows lock and step label. |
+
+Screens: `HomePage`, `HubPage` (Explore, Create, My Sports), `ProfilePage`.
+Create tab: the first card glows (main action). Explore tab: has a search box.
+
+Tests: `test/tab_screens_test.dart` (both looks, English and Bangla).

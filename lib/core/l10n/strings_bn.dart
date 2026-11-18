@@ -152,6 +152,48 @@ class BanglaStrings extends AppStrings {
   String get appearanceSystem => 'ফোনের মতো';
 
   @override
+  String get homeBannerTitle => 'নিজের টুর্নামেন্ট তৈরি করুন!';
+
+  @override
+  String get homeBannerBody => 'আপনার খেলার আয়োজনকে জীবন্ত করে তুলুন।';
+
+  @override
+  String get actionCreateTournament => 'টুর্নামেন্ট তৈরি করুন';
+
+  @override
+  String get quickDiscoverTitle => 'টুর্নামেন্ট খুঁজুন';
+
+  @override
+  String get quickDiscoverBody => 'খুঁজুন ও যোগ দিন';
+
+  @override
+  String get quickCreateBody => 'আয়োজন শুরু করুন';
+
+  @override
+  String get quickJoinTitle => 'টুর্নামেন্টে যোগ দিন';
+
+  @override
+  String get quickJoinBody => 'অংশ নিন';
+
+  @override
+  String get trendingTitle => 'জনপ্রিয় টুর্নামেন্ট';
+
+  @override
+  String get liveMatchesTitle => 'লাইভ ম্যাচ';
+
+  @override
+  String get seeAll => 'সব দেখুন';
+
+  @override
+  String get searchHint => 'টুর্নামেন্ট খুঁজুন...';
+
+  @override
+  String get trendingEmpty => 'জনপ্রিয় টুর্নামেন্ট এখানে দেখা যাবে।';
+
+  @override
+  String get liveEmpty => 'এখন যে ম্যাচ চলছে তা এখানে দেখা যাবে।';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

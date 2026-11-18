@@ -14,6 +14,7 @@ class MySportsPage extends StatelessWidget {
       title: s.tabMySports,
       hub: HubTab.mySports,
       intro: s.mySportsIntro,
+      icon: Icons.emoji_events_outlined,
     );
   }
 }

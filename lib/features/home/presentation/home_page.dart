@@ -7,7 +7,21 @@ import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/screens.dart';
 import '../../../core/providers/backend_provider.dart';
 import '../../../core/router/app_routes.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/widgets/app_badge.dart';
+import '../../../core/widgets/brand_app_bar.dart';
+import '../../../core/widgets/empty_state_card.dart';
+import '../../../core/widgets/glass_tile.dart';
+import '../../../core/widgets/promo_banner.dart';
+import '../../../core/widgets/quick_action_card.dart';
+import '../../../core/widgets/screen_tile.dart';
+import '../../../core/widgets/search_entry_bar.dart';
+import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/stadium_background.dart';
 
+/// Home tab. Step 0.5 gives it the final look (banner, quick actions, sections). The
+/// real tournament and match lists arrive in Step 1.5, so the sections show an empty
+/// card until then.
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
@@ -19,15 +33,22 @@ class HomePage extends ConsumerWidget {
     'system.notifications',
   ];
 
+  /// Opens a screen from the screen list, if it exists.
+  void _open(BuildContext context, String id) {
+    final spec = Screens.byId(id);
+    if (spec != null) {
+      context.push(spec.path);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final s = context.s;
     final configured = ref.watch(backendConfiguredProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(Env.appName),
+      appBar: BrandAppBar(
+        title: Env.appName,
         actions: [
           IconButton(
             icon: const Icon(Icons.language),
@@ -36,29 +57,103 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Text(s.welcome, style: theme.textTheme.headlineSmall),
-          const SizedBox(height: 8),
-          Text(s.homeIntro, style: theme.textTheme.bodyMedium),
-          const SizedBox(height: 16),
-          Text(s.quickLinks, style: theme.textTheme.titleMedium),
-          for (final id in shortcutIds)
-            if (Screens.byId(id) case final spec?)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(spec.icon, color: theme.colorScheme.primary),
-                title: Text(spec.titleFor(s.language)),
-                subtitle: Text(spec.descriptionFor(s.language)),
-                onTap: () => context.push(spec.path),
+      body: StadiumBackground(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.screenH,
+            AppSpacing.md,
+            AppSpacing.screenH,
+            AppSpacing.xl,
+          ),
+          children: [
+            SearchEntryBar(
+              hint: s.searchHint,
+              onTap: () => _open(context, 'discover.search'),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            PromoBanner(
+              title: s.homeBannerTitle,
+              body: s.homeBannerBody,
+              buttonLabel: s.actionCreateTournament,
+              onPressed: () => _open(context, 'create.tournament'),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: QuickActionCard(
+                    icon: Icons.emoji_events_outlined,
+                    title: s.quickDiscoverTitle,
+                    body: s.quickDiscoverBody,
+                    color: QuickActionColor.blue,
+                    onTap: () => _open(context, 'explore.tournaments'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: QuickActionCard(
+                    icon: Icons.add_circle_outline,
+                    title: s.actionCreateTournament,
+                    body: s.quickCreateBody,
+                    color: QuickActionColor.green,
+                    onTap: () => _open(context, 'create.tournament'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: QuickActionCard(
+                    icon: Icons.groups_outlined,
+                    title: s.quickJoinTitle,
+                    body: s.quickJoinBody,
+                    color: QuickActionColor.purple,
+                    onTap: () => _open(context, 'explore.tournaments'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            SectionHeader(
+              title: s.trendingTitle,
+              icon: Icons.local_fire_department_outlined,
+              actionLabel: s.seeAll,
+              onAction: () => _open(context, 'explore.trending'),
+            ),
+            EmptyStateCard(
+              icon: Icons.emoji_events_outlined,
+              message: s.trendingEmpty,
+              footer: AppBadge(
+                label: s.stepLabel('1.5'),
+                tone: AppBadgeTone.info,
               ),
-          // Developer information, hidden in production builds.
-          if (Env.devToolsEnabled) ...[
-            const SizedBox(height: 16),
-            _BackendStatusCard(configured: configured),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            SectionHeader(
+              title: s.liveMatchesTitle,
+              icon: Icons.sensors,
+            ),
+            EmptyStateCard(
+              icon: Icons.sports_soccer,
+              message: s.liveEmpty,
+              footer: AppBadge(
+                label: s.stepLabel('2.4'),
+                tone: AppBadgeTone.info,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            SectionHeader(title: s.quickLinks, icon: Icons.bolt),
+            for (final id in shortcutIds)
+              if (Screens.byId(id) case final spec?) ...[
+                ScreenTile(spec: spec),
+                const SizedBox(height: AppSpacing.sm + 2),
+              ],
+            // Developer information, hidden in production builds.
+            if (Env.devToolsEnabled) ...[
+              const SizedBox(height: AppSpacing.md),
+              _BackendStatusCard(configured: configured),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -71,18 +166,12 @@ class _BackendStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Icon(
-          configured ? Icons.cloud_done_outlined : Icons.cloud_off_outlined,
-        ),
-        title: const Text('Backend'),
-        subtitle: Text(
-          configured
-              ? 'Supabase keys found.'
-              : 'Supabase keys not set yet. The app runs in offline preview.',
-        ),
-      ),
+    return GlassTile(
+      icon: configured ? Icons.cloud_done_outlined : Icons.cloud_off_outlined,
+      title: 'Backend',
+      subtitle: configured
+          ? 'Supabase keys found.'
+          : 'Supabase keys not set yet. The app runs in offline preview.',
     );
   }
 }

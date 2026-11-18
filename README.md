@@ -6,7 +6,7 @@ Tournament marketplace, tournament management, and sports community in one app.
 Status: Steps 0.1 (Tech stack), 0.6 (GitHub and APK pipeline), 0.7 (Roles and
 permissions), 0.8 (Offline-first architecture), 0.9 (Security foundation) and 0.10
 (Public pages and share links), 0.3 (Screens and navigation) and 0.4 (Bangla and
-English) written. Step 0.5 (Design System) parts 1 to 5 written (dark and light added), waiting for the phone check (see docs/DESIGN_SYSTEM.md).
+English) written. Step 0.5 (Design System) parts 1 to 6 written (dark and light, tab screens in card look), waiting for the phone check (see docs/DESIGN_SYSTEM.md).
 
 Project decision: the database and backend connection are built **last**, after all
 screens and features. Until then screens use in-memory sample data behind repository
