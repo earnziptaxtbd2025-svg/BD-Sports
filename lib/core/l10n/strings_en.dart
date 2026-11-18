@@ -134,6 +134,21 @@ class EnglishStrings extends AppStrings {
   String get languageIntro => 'Choose the language of the app.';
 
   @override
+  String get appearanceTitle => 'Appearance';
+
+  @override
+  String get appearanceIntro => 'Choose how the app looks.';
+
+  @override
+  String get appearanceDark => 'Dark';
+
+  @override
+  String get appearanceLight => 'Light';
+
+  @override
+  String get appearanceSystem => 'Same as phone';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

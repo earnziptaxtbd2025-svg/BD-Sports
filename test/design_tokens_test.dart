@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:bd_sports/core/theme/app_colors.dart';
 import 'package:bd_sports/core/theme/app_effects.dart';
+import 'package:bd_sports/core/theme/app_palette.dart';
 import 'package:bd_sports/core/theme/app_spacing.dart';
 import 'package:bd_sports/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,70 @@ void main() {
     });
   });
 
+  group('both looks are readable', () {
+    final Map<String, AppPalette> looks = <String, AppPalette>{
+      'dark': AppPalette.dark,
+      'light': AppPalette.light,
+    };
+
+    for (final MapEntry<String, AppPalette> look in looks.entries) {
+      final AppPalette p = look.value;
+      final List<(String, Color)> backgrounds = <(String, Color)>[
+        ('bgDeep', p.bgDeep),
+        ('bgBase', p.bgBase),
+        ('surface', p.surface),
+      ];
+
+      test('${look.key}: main text', () {
+        for (final (String name, Color bg) in backgrounds) {
+          expect(contrast(p.textPrimary, bg), greaterThanOrEqualTo(7), reason: name);
+        }
+      });
+
+      test('${look.key}: secondary and muted text', () {
+        for (final (String name, Color bg) in backgrounds) {
+          expect(contrast(p.textSecondary, bg), greaterThanOrEqualTo(4.5), reason: name);
+          expect(contrast(p.textMuted, bg), greaterThanOrEqualTo(4.5), reason: name);
+        }
+      });
+
+      test('${look.key}: coloured text and icons', () {
+        for (final (String name, Color bg) in backgrounds) {
+          for (final Color c in <Color>[
+            p.accent,
+            p.goldText,
+            p.cyanText,
+            p.orangeText,
+            p.danger,
+          ]) {
+            expect(contrast(c, bg), greaterThanOrEqualTo(4.5), reason: name);
+          }
+        }
+      });
+
+      test('${look.key}: white text on blue, red and purple fills', () {
+        for (final Color fill in <Color>[
+          AppColors.blueDeep,
+          AppColors.redDeep,
+          AppColors.purpleDeep,
+        ]) {
+          expect(contrast(AppColors.textPrimary, fill), greaterThanOrEqualTo(7));
+        }
+      });
+    }
+
+    test('the light look has a softer glow than the dark look', () {
+      expect(AppPalette.light.glowStrength, lessThan(AppPalette.dark.glowStrength));
+    });
+
+    test('palette blends between dark and light', () {
+      final AppPalette mid =
+          AppPalette.dark.lerp(AppPalette.light, 1) as AppPalette;
+      expect(mid.bgBase, AppPalette.light.bgBase);
+      expect(mid.isDark, isFalse);
+    });
+  });
+
   group('spacing and radius', () {
     test('spacing grows step by step', () {
       final List<double> steps = <double>[
@@ -76,11 +141,19 @@ void main() {
   });
 
   group('themes', () {
-    test('neon theme is dark and green', () {
+    test('night theme is dark and green', () {
       final ThemeData t = AppTheme.neonNight();
       expect(t.brightness, Brightness.dark);
       expect(t.colorScheme.primary, AppColors.neonGreen);
       expect(t.scaffoldBackgroundColor, AppColors.bgBase);
+      expect(t.extension<AppPalette>(), AppPalette.dark);
+    });
+
+    test('day theme is light and has its own palette', () {
+      final ThemeData t = AppTheme.neonDay();
+      expect(t.brightness, Brightness.light);
+      expect(t.scaffoldBackgroundColor, AppPalette.light.bgBase);
+      expect(t.extension<AppPalette>(), AppPalette.light);
     });
 
     test('light theme is still available', () {

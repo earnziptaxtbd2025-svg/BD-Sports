@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_palette.dart';
 import 'app_spacing.dart';
 import 'app_text_styles.dart';
 
@@ -18,80 +19,90 @@ class AppTheme {
 
   static ThemeData dark() => _build(Brightness.dark);
 
-  /// The "stadium night" neon design from the approved screens (Step 0.5).
-  static ThemeData neonNight() {
-    const ColorScheme scheme = ColorScheme(
-      brightness: Brightness.dark,
-      primary: AppColors.neonGreen,
-      onPrimary: Color(0xFF03210F),
-      primaryContainer: AppColors.greenDeep,
-      onPrimaryContainer: AppColors.textPrimary,
+  /// Dark "stadium night" look: the approved neon design (Step 0.5).
+  static ThemeData neonNight() => _neon(AppPalette.dark);
+
+  /// Light "match day" look: same design on a white and pale-blue background.
+  static ThemeData neonDay() => _neon(AppPalette.light);
+
+  /// Builds one look of the neon design from its palette.
+  static ThemeData _neon(AppPalette p) {
+    final bool isDark = p.isDark;
+    final Brightness brightness = isDark ? Brightness.dark : Brightness.light;
+    final AppText t = AppText(p);
+
+    final ColorScheme scheme = ColorScheme(
+      brightness: brightness,
+      primary: p.accent,
+      onPrimary: isDark ? const Color(0xFF03210F) : const Color(0xFFFFFFFF),
+      primaryContainer: isDark ? AppColors.greenDeep : const Color(0xFFCDEED8),
+      onPrimaryContainer: isDark ? AppColors.textPrimary : const Color(0xFF00210F),
       secondary: AppColors.electricBlue,
       onSecondary: AppColors.textPrimary,
-      tertiary: AppColors.gold,
-      onTertiary: Color(0xFF241A00),
-      error: AppColors.liveRed,
+      tertiary: p.goldText,
+      onTertiary: isDark ? const Color(0xFF241A00) : const Color(0xFFFFFFFF),
+      error: p.danger,
       onError: AppColors.textPrimary,
-      surface: AppColors.surface,
-      onSurface: AppColors.textPrimary,
-      onSurfaceVariant: AppColors.textSecondary,
-      outline: AppColors.cyan,
-      outlineVariant: AppColors.divider,
+      surface: p.surface,
+      onSurface: p.textPrimary,
+      onSurfaceVariant: p.textSecondary,
+      outline: p.cyanText,
+      outlineVariant: p.divider,
     );
 
-    const TextTheme textTheme = TextTheme(
-      displayLarge: AppTextStyles.score,
-      headlineSmall: AppTextStyles.title,
-      titleMedium: AppTextStyles.heading,
-      bodyLarge: AppTextStyles.body,
-      bodyMedium: AppTextStyles.body,
-      bodySmall: AppTextStyles.caption,
-      labelLarge: AppTextStyles.button,
-      labelSmall: AppTextStyles.badge,
+    final TextTheme textTheme = TextTheme(
+      displayLarge: t.score,
+      headlineSmall: t.title,
+      titleMedium: t.heading,
+      bodyLarge: t.body,
+      bodyMedium: t.body,
+      bodySmall: t.caption,
+      labelLarge: t.button,
+      labelSmall: t.badge,
     );
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: brightness,
       colorScheme: scheme,
       textTheme: textTheme,
-      scaffoldBackgroundColor: AppColors.bgBase,
-      dividerColor: AppColors.divider,
-      appBarTheme: const AppBarTheme(
+      scaffoldBackgroundColor: p.bgBase,
+      dividerColor: p.divider,
+      extensions: <ThemeExtension<dynamic>>[p],
+      appBarTheme: AppBarTheme(
         centerTitle: false,
-        backgroundColor: AppColors.bgDeep,
-        foregroundColor: AppColors.textPrimary,
+        backgroundColor: p.bgDeep,
+        foregroundColor: p.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
-        titleTextStyle: AppTextStyles.title,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: t.title,
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: AppColors.bgDeep,
+        backgroundColor: p.bgDeep,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: AppColors.greenDeep,
-        labelTextStyle: WidgetStateProperty.all(AppTextStyles.caption),
+        indicatorColor: scheme.primaryContainer,
+        labelTextStyle: WidgetStateProperty.all(t.caption),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final bool selected = states.contains(WidgetState.selected);
-          return IconThemeData(
-            color: selected ? AppColors.neonGreen : AppColors.textSecondary,
-          );
+          return IconThemeData(color: selected ? p.accent : p.textSecondary);
         }),
       ),
-      inputDecorationTheme: const InputDecorationTheme(
+      inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surface,
-        hintStyle: TextStyle(color: AppColors.textMuted),
+        fillColor: p.surface,
+        hintStyle: TextStyle(color: p.textMuted),
         border: OutlineInputBorder(
           borderRadius: AppRadius.pillAll,
-          borderSide: BorderSide(color: AppColors.borderCyan),
+          borderSide: BorderSide(color: p.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: AppRadius.pillAll,
-          borderSide: BorderSide(color: AppColors.borderCyan),
+          borderSide: BorderSide(color: p.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppRadius.pillAll,
-          borderSide: BorderSide(color: AppColors.neonGreen, width: 1.5),
+          borderSide: BorderSide(color: p.accent, width: 1.5),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(

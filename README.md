@@ -6,7 +6,7 @@ Tournament marketplace, tournament management, and sports community in one app.
 Status: Steps 0.1 (Tech stack), 0.6 (GitHub and APK pipeline), 0.7 (Roles and
 permissions), 0.8 (Offline-first architecture), 0.9 (Security foundation) and 0.10
 (Public pages and share links), 0.3 (Screens and navigation) and 0.4 (Bangla and
-English) written. Step 0.5 (Design System) all 4 parts written, waiting for the phone check (see docs/DESIGN_SYSTEM.md).
+English) written. Step 0.5 (Design System) parts 1 to 5 written (dark and light added), waiting for the phone check (see docs/DESIGN_SYSTEM.md).
 
 Project decision: the database and backend connection are built **last**, after all
 screens and features. Until then screens use in-memory sample data behind repository
@@ -105,6 +105,6 @@ version that includes them.
   workflow adds the internet permission and sets the app name.
 - Release APKs are signed with the debug key. That is fine for testing. A proper keystore
   is needed before Google Play (see docs/SECURITY.md).
-- The app defaults to the dark neon "stadium night" theme from the approved design. The light theme is kept. A user setting arrives in Step 1B.13.
+- The app has a dark neon "stadium night" look (default, from the approved design) and a light "match day" look. The person chooses in Profile > Appearance. The old plain themes `AppTheme.light()` and `AppTheme.dark()` are kept in code but no longer used.
 - Analyze and test steps are non-blocking for now. Make them strict once the first
   build is green.

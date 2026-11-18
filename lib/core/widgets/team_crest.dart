@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_text_styles.dart';
 
 /// Round team badge showing the team's first letters. It is used until a team has
@@ -43,12 +44,12 @@ class TeamCrest extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.surface,
+        color: context.palette.surface,
         border: Border.all(color: color, width: 2),
       ),
       child: Text(
         initials(name),
-        style: AppTextStyles.heading.copyWith(fontSize: size * 0.34),
+        style: context.appText.heading.copyWith(fontSize: size * 0.34),
       ),
     );
   }

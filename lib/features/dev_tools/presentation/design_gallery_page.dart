@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_palette.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/app_badge.dart';
@@ -24,19 +25,21 @@ class DesignGalleryPage extends StatefulWidget {
 }
 
 class _DesignGalleryPageState extends State<DesignGalleryPage> {
-  static const List<(String, Color)> _swatches = <(String, Color)>[
-    ('bgDeep', AppColors.bgDeep),
-    ('bgBase', AppColors.bgBase),
-    ('surface', AppColors.surface),
-    ('neonGreen', AppColors.neonGreen),
-    ('electricBlue', AppColors.electricBlue),
-    ('teamRed', AppColors.teamRed),
-    ('purple', AppColors.purple),
-    ('gold', AppColors.gold),
-    ('orange', AppColors.orange),
-    ('liveRed', AppColors.liveRed),
-    ('cyan', AppColors.cyan),
-  ];
+  /// Brand colours are the same in dark and light. Backgrounds follow the palette.
+  List<(String, Color)> _swatches(AppPalette p) => <(String, Color)>[
+        ('bgDeep', p.bgDeep),
+        ('bgBase', p.bgBase),
+        ('surface', p.surface),
+        ('accent', p.accent),
+        ('neonGreen', AppColors.neonGreen),
+        ('electricBlue', AppColors.electricBlue),
+        ('teamRed', AppColors.teamRed),
+        ('purple', AppColors.purple),
+        ('gold', AppColors.gold),
+        ('orange', AppColors.orange),
+        ('liveRed', AppColors.liveRed),
+        ('cyan', AppColors.cyan),
+      ];
 
   static const List<String> _stepLabels = <String>[
     'Basic Info',
@@ -76,11 +79,11 @@ class _DesignGalleryPageState extends State<DesignGalleryPage> {
                 _section('Statistics', _stats()),
                 _section(
                   'Glass card',
-                  const GlassCard(
+                  GlassCard(
                     glowColor: AppColors.neonGreen,
                     child: Text(
                       'A glass card with a neon edge.',
-                      style: AppTextStyles.body,
+                      style: context.appText.body,
                     ),
                   ),
                 ),
@@ -102,7 +105,7 @@ class _DesignGalleryPageState extends State<DesignGalleryPage> {
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Text(
               title,
-              style: AppTextStyles.heading.copyWith(color: AppColors.neonGreen),
+              style: context.appText.heading.copyWith(color: context.palette.accent),
             ),
           ),
           child,
@@ -116,7 +119,7 @@ class _DesignGalleryPageState extends State<DesignGalleryPage> {
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.sm,
       children: <Widget>[
-        for (final (String name, Color color) in _swatches)
+        for (final (String name, Color color) in _swatches(context.palette))
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -126,11 +129,11 @@ class _DesignGalleryPageState extends State<DesignGalleryPage> {
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: AppRadius.smAll,
-                  border: Border.all(color: AppColors.borderCyan),
+                  border: Border.all(color: context.palette.border),
                 ),
               ),
               const SizedBox(height: 2),
-              Text(name, style: AppTextStyles.caption.copyWith(fontSize: 10)),
+              Text(name, style: context.appText.caption.copyWith(fontSize: 10)),
             ],
           ),
       ],

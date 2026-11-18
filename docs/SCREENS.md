@@ -89,7 +89,7 @@ CREATE WIZARD (5 to 10 min)   SCORE MATCH  (offline ready)
 
 ## Screen list
 
-**105 screens: 8 built, 97 planned.**
+**105 screens: 9 built, 96 planned.**
 
 ### Main tabs
 
@@ -257,7 +257,7 @@ CREATE WIZARD (5 to 10 min)   SCORE MATCH  (offline ready)
 | Edit profile | `/profile/edit` | Signed in | 1.1 | Planned |
 | Notification settings | `/profile/notifications` | Signed in | 1B.13 | Planned |
 | Language | `/profile/language` | Anyone | 0.4 | Built |
-| Appearance | `/profile/appearance` | Anyone | 1B.13 | Planned |
+| Appearance | `/profile/appearance` | Anyone | 1B.13 | Built |
 | Login history and devices | `/profile/security` | Signed in | 1B.12 | Planned |
 | Download or delete my data | `/profile/data` | Signed in | 1B.12 | Planned |
 | Get verified | `/profile/verification` | Signed in | 3.6 | Planned |

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_effects.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 
@@ -68,7 +69,7 @@ class NeonButton extends StatelessWidget {
     }
   }
 
-  Color get _borderColor {
+  Color _borderColor(AppPalette p) {
     switch (style) {
       case NeonButtonStyle.green:
         return AppColors.borderGreen;
@@ -79,28 +80,30 @@ class NeonButton extends StatelessWidget {
       case NeonButtonStyle.red:
         return AppColors.borderRed;
       case NeonButtonStyle.outline:
-        return AppColors.borderCyan;
+        return p.border;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
+    // Text on the coloured buttons is always white. On the outline button it follows
+    // the dark or light look.
+    final Color fg =
+        style == NeonButtonStyle.outline ? p.textPrimary : AppColors.textPrimary;
     final bool disabled = onPressed == null;
     final bool tappable = !disabled && !isLoading;
     final String? second = subLabel;
 
     final Widget leading = isLoading
-        ? const SizedBox(
+        ? SizedBox(
             width: 20,
             height: 20,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5,
-              color: AppColors.textPrimary,
-            ),
+            child: CircularProgressIndicator(strokeWidth: 2.5, color: fg),
           )
         : (icon == null
             ? const SizedBox.shrink()
-            : Icon(icon, size: 22, color: AppColors.textPrimary));
+            : Icon(icon, size: 22, color: fg));
 
     final Widget content = Row(
       mainAxisSize: MainAxisSize.min,
@@ -116,7 +119,7 @@ class NeonButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 label,
-                style: AppTextStyles.button,
+                style: context.appText.button.copyWith(color: fg),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -124,10 +127,7 @@ class NeonButton extends StatelessWidget {
               if (second != null)
                 Text(
                   second,
-                  style: AppTextStyles.caption.copyWith(
-                    fontSize: 11,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppTextStyles.caption.copyWith(fontSize: 11, color: fg),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -143,12 +143,12 @@ class NeonButton extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: _gradient,
-          color: _gradient == null ? AppColors.surface : null,
+          color: _gradient == null ? p.surface : null,
           borderRadius: AppRadius.pillAll,
-          border: Border.all(color: _borderColor),
+          border: Border.all(color: _borderColor(p)),
           boxShadow: disabled || style == NeonButtonStyle.outline
               ? null
-              : AppEffects.glow(_glowColor, strength: 0.8),
+              : AppEffects.glow(_glowColor, strength: 0.8 * p.glowStrength),
         ),
         child: Material(
           type: MaterialType.transparency,

@@ -137,6 +137,21 @@ class BanglaStrings extends AppStrings {
   String get languageIntro => 'অ্যাপের ভাষা বেছে নিন।';
 
   @override
+  String get appearanceTitle => 'চেহারা';
+
+  @override
+  String get appearanceIntro => 'অ্যাপ কেমন দেখাবে তা বেছে নিন।';
+
+  @override
+  String get appearanceDark => 'ডার্ক';
+
+  @override
+  String get appearanceLight => 'লাইট';
+
+  @override
+  String get appearanceSystem => 'ফোনের মতো';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

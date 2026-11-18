@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 
@@ -52,8 +52,12 @@ class NeonTextField extends StatelessWidget {
   /// Error text from outside (e.g. from the server). The validator also shows errors.
   final String? errorText;
 
-  OutlineInputBorder _border(Color color, {double width = 1}) {
-    final double radius = maxLines > 1 ? AppRadius.lg : AppRadius.pill;
+  static OutlineInputBorder _border(
+    bool pill,
+    Color color, {
+    double width = 1,
+  }) {
+    final double radius = pill ? AppRadius.pill : AppRadius.lg;
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(radius),
       borderSide: BorderSide(color: color, width: width),
@@ -62,7 +66,10 @@ class NeonTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
+    final AppText t = context.appText;
     final IconData? prefix = prefixIcon;
+    final bool pill = maxLines <= 1 || obscureText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,15 +83,15 @@ class NeonTextField extends StatelessWidget {
           child: Text.rich(
             TextSpan(
               text: label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.textPrimary,
+              style: t.caption.copyWith(
+                color: p.textPrimary,
                 fontWeight: FontWeight.w600,
               ),
               children: <InlineSpan>[
                 if (isRequired)
-                  const TextSpan(
+                  TextSpan(
                     text: ' *',
-                    style: TextStyle(color: AppColors.liveRed),
+                    style: TextStyle(color: p.danger),
                   ),
               ],
             ),
@@ -101,16 +108,16 @@ class NeonTextField extends StatelessWidget {
           inputFormatters: inputFormatters,
           validator: validator,
           onChanged: onChanged,
-          style: AppTextStyles.body,
-          cursorColor: AppColors.neonGreen,
+          style: t.body,
+          cursorColor: p.accent,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: AppTextStyles.body.copyWith(color: AppColors.textMuted),
+            hintStyle: t.body.copyWith(color: p.textMuted),
             errorText: errorText,
-            errorStyle: const TextStyle(color: AppColors.liveRed),
-            counterStyle: AppTextStyles.caption,
+            errorStyle: TextStyle(color: p.danger),
+            counterStyle: t.caption,
             filled: true,
-            fillColor: AppColors.surface,
+            fillColor: p.surface,
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
@@ -118,14 +125,14 @@ class NeonTextField extends StatelessWidget {
             ),
             prefixIcon: prefix == null
                 ? null
-                : Icon(prefix, color: AppColors.textSecondary, size: 22),
+                : Icon(prefix, color: p.textSecondary, size: 22),
             suffixIcon: suffix,
-            border: _border(AppColors.borderCyan),
-            enabledBorder: _border(AppColors.borderCyan),
-            disabledBorder: _border(AppColors.divider),
-            focusedBorder: _border(AppColors.neonGreen, width: 1.5),
-            errorBorder: _border(AppColors.liveRed),
-            focusedErrorBorder: _border(AppColors.liveRed, width: 1.5),
+            border: _border(pill, p.border),
+            enabledBorder: _border(pill, p.border),
+            disabledBorder: _border(pill, p.divider),
+            focusedBorder: _border(pill, p.accent, width: 1.5),
+            errorBorder: _border(pill, p.danger),
+            focusedErrorBorder: _border(pill, p.danger, width: 1.5),
           ),
         ),
       ],

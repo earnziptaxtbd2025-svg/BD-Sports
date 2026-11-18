@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_assets.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_text_styles.dart';
 
 /// App logo. Shows `assets/images/logo.png` when it exists, otherwise a drawn shield
@@ -14,6 +15,8 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
+    final AppText t = context.appText;
     final Widget mark = SizedBox(
       width: size,
       height: size,
@@ -42,27 +45,24 @@ class AppLogo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('Bangladesh', style: AppTextStyles.heading.copyWith(height: 1)),
+              Text('Bangladesh', style: t.heading.copyWith(height: 1)),
               Text.rich(
                 TextSpan(
                   children: <InlineSpan>[
                     TextSpan(
                       text: 'Sports ',
-                      style: AppTextStyles.heading.copyWith(
-                        color: AppColors.neonGreen,
-                        height: 1.1,
-                      ),
+                      style: t.heading.copyWith(color: p.accent, height: 1.1),
                     ),
                     TextSpan(
                       text: 'Platform',
-                      style: AppTextStyles.heading.copyWith(height: 1.1),
+                      style: t.heading.copyWith(height: 1.1),
                     ),
                   ],
                 ),
               ),
               Text(
                 'Play • Organize • Connect',
-                style: AppTextStyles.caption.copyWith(
+                style: t.caption.copyWith(
                   fontSize: 11,
                   fontStyle: FontStyle.italic,
                 ),

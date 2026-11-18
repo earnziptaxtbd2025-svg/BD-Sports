@@ -9,6 +9,7 @@ import 'core/l10n/language_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/sync/sync_engine.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/theme_mode_provider.dart';
 
 class BdSportsApp extends ConsumerWidget {
   const BdSportsApp({super.key});
@@ -20,16 +21,16 @@ class BdSportsApp extends ConsumerWidget {
 
     final router = ref.watch(appRouterProvider);
     final language = ref.watch(languageProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
       title: Env.appName,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
+      theme: AppTheme.neonDay(),
       darkTheme: AppTheme.neonNight(),
-      // The approved design is the dark neon "stadium night" look, so it is the
-      // default. The light theme stays available. Choosing between them becomes a
-      // user setting in Step 1B.13.
-      themeMode: ThemeMode.dark,
+      // Dark is the default (the approved design). The person can choose light or
+      // "same as phone" in Profile > Appearance.
+      themeMode: themeMode,
       locale: language.locale,
       supportedLocales: [
         for (final item in AppLanguage.values) item.locale,

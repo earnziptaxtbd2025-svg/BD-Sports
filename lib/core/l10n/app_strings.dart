@@ -101,6 +101,13 @@ abstract class AppStrings {
   String get languageTitle;
   String get languageIntro;
 
+  // ---- Appearance screen ----
+  String get appearanceTitle;
+  String get appearanceIntro;
+  String get appearanceDark;
+  String get appearanceLight;
+  String get appearanceSystem;
+
   // ---- Names of enum values ----
   String permission(Permission permission);
   String accountRole(AccountRole role);
@@ -134,6 +141,8 @@ abstract class AppStrings {
         privacyFindByPhone, privacyPlayers, privacyTalentSearch,
         privacyTalentSearchHint, privacyShowStats, privacyFooter,
         languageTitle, languageIntro,
+        appearanceTitle, appearanceIntro, appearanceDark, appearanceLight,
+        appearanceSystem,
       ];
 }
 

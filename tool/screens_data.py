@@ -112,7 +112,7 @@ SCREENS = [
     ("settings.edit", "Edit profile", "/profile/edit", "settings", "edit_outlined", "1.1", SIGNED_IN, None, None, PL, "Name, photo and home area."),
     ("settings.notifications", "Notification settings", "/profile/notifications", "settings", "notifications_outlined", "1B.13", SIGNED_IN, None, None, PL, "Choose what you get notified about."),
     ("settings.language", "Language", "/profile/language", "settings", "language", "0.4", PUBLIC, None, None, B, "Bangla or English."),
-    ("settings.appearance", "Appearance", "/profile/appearance", "settings", "dark_mode_outlined", "1B.13", PUBLIC, None, None, PL, "Light or dark mode."),
+    ("settings.appearance", "Appearance", "/profile/appearance", "settings", "dark_mode_outlined", "1B.13", PUBLIC, None, None, B, "Light or dark mode."),
     ("settings.security", "Login history and devices", "/profile/security", "settings", "security", "1B.12", SIGNED_IN, None, None, PL, "Where your account is signed in."),
     ("settings.data", "Download or delete my data", "/profile/data", "settings", "download_outlined", "1B.12", SIGNED_IN, None, None, PL, "Export your data or delete your account."),
     ("settings.verification", "Get verified", "/profile/verification", "settings", "verified_outlined", "3.6", SIGNED_IN, None, None, PL, "Apply for a verified badge."),

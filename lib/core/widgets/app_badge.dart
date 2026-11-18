@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 
@@ -44,31 +45,29 @@ class AppBadge extends StatelessWidget {
   final AppBadgeTone tone;
   final IconData? icon;
 
-  ({Color background, Color foreground, Color border}) get _colors {
+  /// Colours for the tone. Text colours come from the palette so they stay readable
+  /// on both the dark and the light look.
+  ({Color background, Color foreground, Color border}) _colors(AppPalette p) {
+    ({Color background, Color foreground, Color border}) tinted(Color fg) => (
+          background: fg.withAlpha(p.isDark ? 40 : 24),
+          foreground: fg,
+          border: fg.withAlpha(150),
+        );
+
     switch (tone) {
       case AppBadgeTone.success:
-        return (
-          background: const Color(0x3322E55C),
-          foreground: AppColors.neonGreen,
-          border: AppColors.borderGreen,
-        );
+        return tinted(p.accent);
       case AppBadgeTone.warning:
-        return (
-          background: const Color(0x33FFC928),
-          foreground: AppColors.gold,
-          border: const Color(0x99FFC928),
-        );
+        return tinted(p.goldText);
+      case AppBadgeTone.info:
+        return tinted(p.cyanText);
+      case AppBadgeTone.orange:
+        return tinted(p.orangeText);
       case AppBadgeTone.danger:
         return (
           background: AppColors.redDeep,
           foreground: AppColors.textPrimary,
           border: AppColors.liveRed,
-        );
-      case AppBadgeTone.info:
-        return (
-          background: const Color(0x3335B8E8),
-          foreground: AppColors.cyan,
-          border: AppColors.borderCyan,
         );
       case AppBadgeTone.blue:
         return (
@@ -82,24 +81,18 @@ class AppBadge extends StatelessWidget {
           foreground: AppColors.textPrimary,
           border: AppColors.purple,
         );
-      case AppBadgeTone.orange:
-        return (
-          background: const Color(0x33F08A24),
-          foreground: AppColors.orange,
-          border: const Color(0x99F08A24),
-        );
       case AppBadgeTone.neutral:
         return (
-          background: AppColors.surfaceRaised,
-          foreground: AppColors.textSecondary,
-          border: AppColors.borderCyan,
+          background: p.surfaceRaised,
+          foreground: p.textSecondary,
+          border: p.border,
         );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colors = _colors;
+    final colors = _colors(context.palette);
     final IconData? leading = icon;
 
     return DecoratedBox(

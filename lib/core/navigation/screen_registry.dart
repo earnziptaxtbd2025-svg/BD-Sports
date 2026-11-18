@@ -1017,6 +1017,7 @@ const List<ScreenSpec> allScreens = <ScreenSpec>[
     description: 'Light or dark mode.',
     titleBn: 'চেহারা',
     descriptionBn: 'লাইট বা ডার্ক মোড।',
+    status: ScreenStatus.built,
   ),
   ScreenSpec(
     id: 'settings.security',

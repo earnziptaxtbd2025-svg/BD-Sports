@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_effects.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_text_styles.dart';
 
 /// One item of a [NeonBottomNav].
@@ -39,6 +40,7 @@ class NeonBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
     final double bottomInset = MediaQuery.of(context).viewPadding.bottom;
     final bool hasRaised = centerIndex != null;
     final double total = _barHeight + (hasRaised ? _raise : 0);
@@ -55,10 +57,10 @@ class NeonBottomNav extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 height: _barHeight,
-                child: const DecoratedBox(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: AppColors.bgDeep,
-                    border: Border(top: BorderSide(color: AppColors.borderCyan)),
+                    color: p.bgDeep,
+                    border: Border(top: BorderSide(color: p.border)),
                   ),
                 ),
               ),
@@ -80,7 +82,7 @@ class NeonBottomNav extends StatelessWidget {
             ],
           ),
         ),
-        Container(height: bottomInset, color: AppColors.bgDeep),
+        Container(height: bottomInset, color: p.bgDeep),
       ],
     );
   }
@@ -101,7 +103,8 @@ class _NavCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = selected ? AppColors.neonGreen : AppColors.textSecondary;
+    final AppPalette p = context.palette;
+    final Color color = selected ? p.accent : p.textSecondary;
     final IconData icon = selected ? (item.selectedIcon ?? item.icon) : item.icon;
 
     final Widget iconWidget = raised
@@ -112,7 +115,7 @@ class _NavCell extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: AppEffects.buttonGreen,
               border: Border.all(color: AppColors.borderGreen),
-              boxShadow: AppEffects.glow(AppColors.neonGreen),
+              boxShadow: AppEffects.glow(AppColors.neonGreen, strength: p.glowStrength),
             ),
             child: Icon(icon, size: 30, color: AppColors.textPrimary),
           )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_effects.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 
@@ -61,7 +62,9 @@ class _TabPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
     final IconData? icon = tab.icon;
+    final Color fg = selected ? AppColors.textPrimary : p.textSecondary;
 
     return Semantics(
       button: true,
@@ -73,13 +76,13 @@ class _TabPill extends StatelessWidget {
         duration: const Duration(milliseconds: 180),
         decoration: BoxDecoration(
           gradient: selected ? AppEffects.buttonGreen : null,
-          color: selected ? null : AppColors.surface,
+          color: selected ? null : p.surface,
           borderRadius: AppRadius.pillAll,
           border: Border.all(
-            color: selected ? AppColors.borderGreen : AppColors.borderCyan,
+            color: selected ? AppColors.borderGreen : p.border,
           ),
           boxShadow: selected
-              ? AppEffects.glow(AppColors.neonGreen, strength: 0.7)
+              ? AppEffects.glow(AppColors.neonGreen, strength: 0.7 * p.glowStrength)
               : null,
         ),
         child: Material(
@@ -95,17 +98,12 @@ class _TabPill extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     if (icon != null) ...<Widget>[
-                      Icon(icon, size: 20, color: AppColors.textPrimary),
+                      Icon(icon, size: 20, color: fg),
                       const SizedBox(width: AppSpacing.sm),
                     ],
                     Text(
                       tab.label,
-                      style: AppTextStyles.button.copyWith(
-                        fontSize: 14,
-                        color: selected
-                            ? AppColors.textPrimary
-                            : AppColors.textSecondary,
-                      ),
+                      style: AppTextStyles.button.copyWith(fontSize: 14, color: fg),
                     ),
                   ],
                 ),

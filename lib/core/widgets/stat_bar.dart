@@ -45,6 +45,7 @@ class StatBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppText t = context.appText;
     final (int homeFlex, int awayFlex) = flexes(homeValue, awayValue);
 
     return Semantics(
@@ -56,17 +57,17 @@ class StatBar extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text(_format(homeValue), style: AppTextStyles.tableNumber),
+                Text(_format(homeValue), style: t.tableNumber),
                 Expanded(
                   child: Text(
                     label,
-                    style: AppTextStyles.caption,
+                    style: t.caption,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Text(_format(awayValue), style: AppTextStyles.tableNumber),
+                Text(_format(awayValue), style: t.tableNumber),
               ],
             ),
             const SizedBox(height: AppSpacing.xs + 2),

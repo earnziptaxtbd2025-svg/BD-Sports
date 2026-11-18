@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_palette.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
 import 'glass_card.dart';
@@ -38,6 +39,8 @@ class ScoreHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppPalette p = context.palette;
+    final AppText t = context.appText;
     final String? statusText = status;
     final String? competitionText = competition;
 
@@ -62,16 +65,12 @@ class ScoreHeader extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Icon(
-                      Icons.emoji_events,
-                      size: 16,
-                      color: AppColors.gold,
-                    ),
+                    Icon(Icons.emoji_events, size: 16, color: p.goldText),
                     const SizedBox(width: AppSpacing.xs + 2),
                     Flexible(
                       child: Text(
                         competitionText,
-                        style: AppTextStyles.caption,
+                        style: t.caption,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -102,13 +101,13 @@ class ScoreHeader extends StatelessWidget {
                         ],
                         FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: Text(score, style: AppTextStyles.score),
+                          child: Text(score, style: t.score),
                         ),
                         if (statusText != null) ...<Widget>[
                           const SizedBox(height: AppSpacing.xs),
                           Text(
                             statusText,
-                            style: AppTextStyles.caption,
+                            style: t.caption,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -148,7 +147,7 @@ class _Team extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         Text(
           name,
-          style: AppTextStyles.heading.copyWith(fontSize: 15),
+          style: context.appText.heading.copyWith(fontSize: 15),
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

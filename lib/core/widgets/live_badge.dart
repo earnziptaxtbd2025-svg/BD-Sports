@@ -72,7 +72,10 @@ class _LiveBadgeState extends State<LiveBadge>
                 ),
               ),
               const SizedBox(width: AppSpacing.xs + 2),
-              Text(widget.label, style: AppTextStyles.badge),
+              Text(
+                widget.label,
+                style: AppTextStyles.badge.copyWith(color: AppColors.textPrimary),
+              ),
             ],
           ),
         ),

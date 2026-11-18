@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import 'app_palette.dart';
 
-/// Text styles of the design. Android's own Roboto is used. If a phone cannot show
-/// Bangla, a bundled font is added in Step 0.5 part 4 and only [fontFamilyFallback]
-/// changes.
+/// Sizes and weights of the text styles, without colour.
+///
+/// In a widget use `context.appText.body` (coloured for the current dark or light
+/// look). Use this class only to build a new coloured style.
+/// Android's own Roboto is used. If a phone cannot show Bangla, a bundled font is
+/// added later and only [fontFamilyFallback] changes.
 class AppTextStyles {
   const AppTextStyles._();
 
@@ -16,7 +19,6 @@ class AppTextStyles {
     fontSize: 48,
     height: 1.1,
     fontWeight: FontWeight.w800,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -25,7 +27,6 @@ class AppTextStyles {
     fontSize: 22,
     height: 1.2,
     fontWeight: FontWeight.w800,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -34,7 +35,6 @@ class AppTextStyles {
     fontSize: 17,
     height: 1.25,
     fontWeight: FontWeight.w700,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -43,7 +43,6 @@ class AppTextStyles {
     fontSize: 15,
     height: 1.35,
     fontWeight: FontWeight.w400,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -52,7 +51,6 @@ class AppTextStyles {
     fontSize: 13,
     height: 1.3,
     fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -61,7 +59,6 @@ class AppTextStyles {
     fontSize: 16,
     height: 1.2,
     fontWeight: FontWeight.w700,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -71,7 +68,6 @@ class AppTextStyles {
     height: 1.1,
     fontWeight: FontWeight.w800,
     letterSpacing: 0.4,
-    color: AppColors.textPrimary,
     fontFamilyFallback: fontFamilyFallback,
   );
 
@@ -80,8 +76,30 @@ class AppTextStyles {
     fontSize: 14,
     height: 1.2,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
     fontFeatures: <FontFeature>[FontFeature.tabularFigures()],
     fontFamilyFallback: fontFamilyFallback,
   );
+}
+
+/// The text styles coloured for one palette (dark or light).
+class AppText {
+  const AppText(this.palette);
+
+  final AppPalette palette;
+
+  TextStyle get score => AppTextStyles.score.copyWith(color: palette.textPrimary);
+  TextStyle get title => AppTextStyles.title.copyWith(color: palette.textPrimary);
+  TextStyle get heading => AppTextStyles.heading.copyWith(color: palette.textPrimary);
+  TextStyle get body => AppTextStyles.body.copyWith(color: palette.textPrimary);
+  TextStyle get caption =>
+      AppTextStyles.caption.copyWith(color: palette.textSecondary);
+  TextStyle get button => AppTextStyles.button.copyWith(color: palette.textPrimary);
+  TextStyle get badge => AppTextStyles.badge.copyWith(color: palette.textPrimary);
+  TextStyle get tableNumber =>
+      AppTextStyles.tableNumber.copyWith(color: palette.textPrimary);
+}
+
+extension AppTextContext on BuildContext {
+  /// Text styles for the current look: `context.appText.heading`.
+  AppText get appText => AppText(palette);
 }
