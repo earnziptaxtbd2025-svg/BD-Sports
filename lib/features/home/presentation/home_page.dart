@@ -78,7 +78,10 @@ class HomePage extends ConsumerWidget {
               onPressed: () => _open(context, 'create.tournament'),
             ),
             const SizedBox(height: AppSpacing.md),
-            Row(
+            // The three cards get the same height. A Row that stretches needs a fixed
+            // height, so IntrinsicHeight gives it the height of the tallest card.
+            IntrinsicHeight(
+              child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
@@ -111,6 +114,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
             ),
             const SizedBox(height: AppSpacing.xl),
             SectionHeader(

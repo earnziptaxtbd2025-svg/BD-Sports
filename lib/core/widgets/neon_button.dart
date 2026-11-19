@@ -105,37 +105,43 @@ class NeonButton extends StatelessWidget {
             ? const SizedBox.shrink()
             : Icon(icon, size: 22, color: fg));
 
-    final Widget content = Row(
+    final Widget labels = Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        if (isLoading || icon != null) ...<Widget>[
-          leading,
-          const SizedBox(width: AppSpacing.sm),
-        ],
-        Flexible(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                label,
-                style: context.appText.button.copyWith(color: fg),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
-              if (second != null)
-                Text(
-                  second,
-                  style: AppTextStyles.caption.copyWith(fontSize: 11, color: fg),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                ),
-            ],
-          ),
+        Text(
+          label,
+          style: context.appText.button.copyWith(color: fg),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
+        if (second != null)
+          Text(
+            second,
+            style: AppTextStyles.caption.copyWith(fontSize: 11, color: fg),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
       ],
+    );
+
+    // A Flexible child needs a limited width. When the button sits in a place with no
+    // width limit (for example directly in a Row), the label keeps its own width.
+    final Widget content = LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints box) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (isLoading || icon != null) ...<Widget>[
+              leading,
+              const SizedBox(width: AppSpacing.sm),
+            ],
+            if (box.hasBoundedWidth) Flexible(child: labels) else labels,
+          ],
+        );
+      },
     );
 
     final Widget button = Opacity(

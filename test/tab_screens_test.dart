@@ -57,12 +57,12 @@ void main() {
         expect(find.text('Search tournaments...'), findsOneWidget);
         expect(tester.takeException(), isNull);
 
+        expect(find.text('Trending Tournaments'), findsOneWidget);
         await tester.scrollUntilVisible(
           find.text('Live Matches'),
           300,
           scrollable: find.byType(Scrollable).first,
         );
-        expect(find.text('Trending Tournaments'), findsOneWidget);
         expect(find.text('Live Matches'), findsOneWidget);
       });
 
