@@ -119,7 +119,10 @@ void main() {
 
       await sendCodeFor(tester, '01712345678');
       expect(find.text('We sent a 6-digit code to +8801712345678.'), findsOneWidget);
-      expect(find.textContaining('123456'), findsOneWidget); // preview hint
+      expect(
+        find.text('Preview mode: no SMS is sent. Use the code 123456.'),
+        findsOneWidget,
+      );
 
       await typeCode(tester, '123456');
       expect(find.text('Tell us about you'), findsWidgets);

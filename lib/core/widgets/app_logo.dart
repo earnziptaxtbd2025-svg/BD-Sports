@@ -8,10 +8,18 @@ import '../theme/app_text_styles.dart';
 /// App logo. Shows `assets/images/logo.png` when it exists, otherwise a drawn shield
 /// with a ball. [showName] adds "Bangladesh Sports Platform" and the tagline.
 class AppLogo extends StatelessWidget {
-  const AppLogo({super.key, this.size = 56, this.showName = false});
+  const AppLogo({
+    super.key,
+    this.size = 56,
+    this.showName = false,
+    this.imageAsset = AppAssets.logo,
+  });
 
   final double size;
   final bool showName;
+
+  /// The logo file. If it does not exist, a drawn shield is shown instead.
+  final String imageAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,7 @@ class AppLogo extends StatelessWidget {
       width: size,
       height: size,
       child: Image.asset(
-        AppAssets.logo,
+        imageAsset,
         fit: BoxFit.contain,
         excludeFromSemantics: true,
         errorBuilder: (BuildContext c, Object e, StackTrace? s) =>

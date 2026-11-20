@@ -21,7 +21,18 @@ void main() {
 
     testWidgets('AppLogo draws a fallback and shows the name', (tester) async {
       await tester.pumpWidget(
-        host(const Scaffold(body: Center(child: AppLogo(showName: true)))),
+        host(
+          const Scaffold(
+            body: Center(
+              child: AppLogo(
+                showName: true,
+                // A file that does not exist, so the test does not depend on
+                // whether the real logo has been added to assets/images.
+                imageAsset: 'assets/images/does_not_exist.png',
+              ),
+            ),
+          ),
+        ),
       );
       await tester.pump();
       expect(find.text('Bangladesh'), findsOneWidget);
