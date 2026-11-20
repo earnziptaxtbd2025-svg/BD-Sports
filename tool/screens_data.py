@@ -17,9 +17,9 @@ SCREENS = [
     ("tab.profile", "Profile", "/profile", "tabs", "person_outline", "0.3", PUBLIC, None, None, B, "Your account, privacy and settings."),
 
     # ---- Sign in ----
-    ("auth.signIn", "Sign in", "/sign-in", "auth", "login", "1.1", PUBLIC, None, None, PL, "Sign in with your mobile number."),
-    ("auth.verify", "Verify code", "/sign-in/verify", "auth", "sms_outlined", "1.1", PUBLIC, None, None, PL, "Enter the code sent by SMS."),
-    ("auth.welcome", "Set up your profile", "/welcome", "auth", "waving_hand_outlined", "1.1", SIGNED_IN, None, None, PL, "Name, photo and home area after first sign-in."),
+    ("auth.signIn", "Sign in", "/sign-in", "auth", "login", "1.1", PUBLIC, None, None, B, "Sign in with your mobile number."),
+    ("auth.verify", "Verify code", "/sign-in/verify", "auth", "sms_outlined", "1.1", PUBLIC, None, None, B, "Enter the code sent by SMS."),
+    ("auth.welcome", "Set up your profile", "/welcome", "auth", "waving_hand_outlined", "1.1", SIGNED_IN, None, None, B, "Name, photo and home area after first sign-in."),
 
     # ---- Discover (Explore tab) ----
     ("explore.tournaments", "Tournaments", "/explore/tournaments", "discover", "emoji_events_outlined", "1.6", PUBLIC, None, "explore", PL, "Search and filter tournaments."),
@@ -109,7 +109,7 @@ SCREENS = [
     ("community.chat", "Chat", "/chats/:id", "community", "forum_outlined", "3.13", SIGNED_IN, None, None, PL, "One conversation."),
 
     # ---- Settings and help ----
-    ("settings.edit", "Edit profile", "/profile/edit", "settings", "edit_outlined", "1.1", SIGNED_IN, None, None, PL, "Name, photo and home area."),
+    ("settings.edit", "Edit profile", "/profile/edit", "settings", "edit_outlined", "1.1", SIGNED_IN, None, None, B, "Name, photo and home area."),
     ("settings.notifications", "Notification settings", "/profile/notifications", "settings", "notifications_outlined", "1B.13", SIGNED_IN, None, None, PL, "Choose what you get notified about."),
     ("settings.language", "Language", "/profile/language", "settings", "language", "0.4", PUBLIC, None, None, B, "Bangla or English."),
     ("settings.appearance", "Appearance", "/profile/appearance", "settings", "dark_mode_outlined", "1B.13", PUBLIC, None, None, B, "Light or dark mode."),

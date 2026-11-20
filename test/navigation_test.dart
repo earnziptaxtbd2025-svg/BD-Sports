@@ -52,7 +52,7 @@ void main() {
   testWidgets('signed-out visitors are sent to sign in', (tester) async {
     final c = await start(tester);
     await open(tester, c, '/create/tournament');
-    expect(find.text('Sign-in is built in Step 1.1.'), findsOneWidget);
+    expect(find.text('Welcome back!'), findsOneWidget);
   });
 
   testWidgets('a member opens the create tournament screen', (tester) async {
@@ -93,7 +93,7 @@ void main() {
     final user = c.read(currentUserProvider.notifier);
 
     await open(tester, c, '/admin');
-    expect(find.text('Sign-in is built in Step 1.1.'), findsOneWidget);
+    expect(find.text('Welcome back!'), findsOneWidget);
 
     user.signInAs(AccountRole.moderator);
     await open(tester, c, '/admin');
@@ -112,7 +112,7 @@ void main() {
 
     user.signOut();
     await tester.pumpAndSettle();
-    expect(find.text('Sign-in is built in Step 1.1.'), findsOneWidget);
+    expect(find.text('Welcome back!'), findsOneWidget);
   });
 
   testWidgets('an unknown address shows a friendly page', (tester) async {

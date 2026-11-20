@@ -76,6 +76,7 @@ const List<ScreenSpec> allScreens = <ScreenSpec>[
     description: 'Sign in with your mobile number.',
     titleBn: 'সাইন ইন',
     descriptionBn: 'মোবাইল নম্বর দিয়ে সাইন ইন করুন।',
+    status: ScreenStatus.built,
   ),
   ScreenSpec(
     id: 'auth.verify',
@@ -87,6 +88,7 @@ const List<ScreenSpec> allScreens = <ScreenSpec>[
     description: 'Enter the code sent by SMS.',
     titleBn: 'কোড যাচাই',
     descriptionBn: 'এসএমএসে পাওয়া কোডটি লিখুন।',
+    status: ScreenStatus.built,
   ),
   ScreenSpec(
     id: 'auth.welcome',
@@ -99,6 +101,7 @@ const List<ScreenSpec> allScreens = <ScreenSpec>[
     titleBn: 'প্রোফাইল সাজান',
     descriptionBn: 'প্রথমবার সাইন ইনের পর নাম, ছবি ও এলাকা দিন।',
     access: ScreenAccess.signedIn,
+    status: ScreenStatus.built,
   ),
   ScreenSpec(
     id: 'explore.tournaments',
@@ -982,6 +985,7 @@ const List<ScreenSpec> allScreens = <ScreenSpec>[
     titleBn: 'প্রোফাইল সম্পাদনা',
     descriptionBn: 'নাম, ছবি ও নিজের এলাকা।',
     access: ScreenAccess.signedIn,
+    status: ScreenStatus.built,
   ),
   ScreenSpec(
     id: 'settings.notifications',

@@ -8,6 +8,7 @@ import '../../../core/l10n/app_strings.dart';
 import '../../../core/navigation/screen_spec.dart';
 import '../../../core/navigation/screens.dart';
 import '../../../core/router/app_routes.dart';
+import '../../../core/auth/auth_providers.dart';
 import '../../../core/theme/app_palette.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -17,6 +18,9 @@ import '../../../core/widgets/glass_tile.dart';
 import '../../../core/widgets/neon_button.dart';
 import '../../../core/widgets/screen_tile.dart';
 import '../../../core/widgets/stadium_background.dart';
+import '../../../core/widgets/user_avatar.dart';
+import '../../../core/widgets/app_badge.dart';
+import '../../auth/presentation/auth_messages.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -45,15 +49,10 @@ class ProfilePage extends ConsumerWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: p.surfaceRaised,
-                      border: Border.all(color: p.accent, width: 2),
-                    ),
-                    child: Icon(Icons.person_outline, color: p.accent, size: 30),
+                  UserAvatar(
+                    name: user?.displayName ?? '',
+                    photo: ref.watch(profilePhotoProvider),
+                    size: 60,
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
@@ -69,10 +68,29 @@ class ProfilePage extends ConsumerWidget {
                         const SizedBox(height: 2),
                         Text(
                           user == null
-                              ? s.signInComingSoon
-                              : s.accountRole(user.accountRole),
+                              ? s.profileSignedOutHint
+                              : (user.phone ?? s.accountRole(user.accountRole)),
                           style: t.caption,
                         ),
+                        if (user != null && user.hasProfile) ...[
+                          const SizedBox(height: AppSpacing.xs + 2),
+                          Wrap(
+                            spacing: AppSpacing.xs + 2,
+                            runSpacing: AppSpacing.xs,
+                            children: [
+                              AppBadge(
+                                label: sportsRoleTitle(s, user.sportsRole),
+                                tone: AppBadgeTone.success,
+                              ),
+                              if (user.division != null)
+                                AppBadge(
+                                  label: user.division!.labelFor(s.language),
+                                  tone: AppBadgeTone.info,
+                                  icon: Icons.location_on_outlined,
+                                ),
+                            ],
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -91,6 +109,15 @@ class ProfilePage extends ConsumerWidget {
             for (final spec in settings) ...[
               ScreenTile(spec: spec),
               const SizedBox(height: AppSpacing.sm + 2),
+            ],
+            if (user != null) ...[
+              const SizedBox(height: AppSpacing.sm),
+              NeonButton(
+                label: s.signOut,
+                icon: Icons.logout,
+                style: NeonButtonStyle.outline,
+                onPressed: () => _confirmSignOut(context, ref),
+              ),
             ],
             if (Env.devToolsEnabled) ...[
               const SizedBox(height: AppSpacing.md),
@@ -124,6 +151,30 @@ class ProfilePage extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _confirmSignOut(BuildContext context, WidgetRef ref) async {
+  final s = context.s;
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(s.signOutTitle),
+      content: Text(s.signOutBody),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(s.actionCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          child: Text(s.signOut),
+        ),
+      ],
+    ),
+  );
+  if (confirmed == true) {
+    await ref.read(authControllerProvider).signOut();
   }
 }
 

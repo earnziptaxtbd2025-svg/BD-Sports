@@ -48,7 +48,9 @@ docs/PUBLIC_PAGES.md        Share links, public pages, what they may show
 docs/SCREENS.md             All screens, navigation rules, access, layouts
 docs/LANGUAGES.md           Bangla and English: how it works, style guide, word list
 docs/DESIGN_SYSTEM.md       Design system parts, colour and layout rules
+docs/AUTH.md                Sign in, profile, preview mode, server set-up (Step 1.1)
 tool/                       Screen list source and generator (python3 tool/generate_screens.py)
+supabase/migrations/        SQL files to run in Supabase (one per step)
 SECURITY.md                 How to report a security problem
 .github/workflows/          APK build pipeline
 ```

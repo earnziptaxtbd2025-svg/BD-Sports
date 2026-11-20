@@ -11,6 +11,9 @@ class AppRoutes {
   static const String privacy = '/privacy';
   static const String language = '/profile/language';
   static const String appearance = '/profile/appearance';
+  static const String verify = '/sign-in/verify';
+  static const String welcome = '/welcome';
+  static const String editProfile = '/profile/edit';
   static const String signIn = '/sign-in';
   static const String noAccess = '/no-access';
 

@@ -194,6 +194,144 @@ class BanglaStrings extends AppStrings {
   String get liveEmpty => 'এখন যে ম্যাচ চলছে তা এখানে দেখা যাবে।';
 
   @override
+  String get authWelcomeBack => 'আবার স্বাগতম!';
+
+  @override
+  String get authSignInSubtitle => 'চালিয়ে যেতে মোবাইল নম্বর দিয়ে সাইন ইন করুন।';
+
+  @override
+  String get authPhoneLabel => 'মোবাইল নম্বর';
+
+  @override
+  String get authPhoneHint => 'যেমন 01712345678';
+
+  @override
+  String get authSendCode => 'কোড পাঠান';
+
+  @override
+  String get authTermsNote => 'চালিয়ে গেলে আপনি শর্তাবলি ও গোপনীয়তা নীতিতে সম্মত হচ্ছেন।';
+
+  @override
+  String get authVerifyHeading => 'কোড লিখুন';
+
+  @override
+  String get authVerify => 'যাচাই করুন';
+
+  @override
+  String get authResend => 'কোড আবার পাঠান';
+
+  @override
+  String get authChangeNumber => 'নম্বর বদলান';
+
+  @override
+  String get authCodeResent => 'নতুন কোড পাঠানো হয়েছে।';
+
+  @override
+  String get authCodeWrong => 'কোডটি ঠিক নয় বা মেয়াদ শেষ। দেখে নিন বা নতুন কোড নিন।';
+
+  @override
+  String get authTooMany => 'অনেকবার চেষ্টা হয়েছে। কয়েক মিনিট অপেক্ষা করুন।';
+
+  @override
+  String get authOffline => 'ইন্টারনেট নেই। সংযোগ দিয়ে আবার চেষ্টা করুন।';
+
+  @override
+  String get authSomethingWrong => 'কিছু ভুল হয়েছে। আবার চেষ্টা করুন।';
+
+  @override
+  String get authPreviewHint => 'প্রিভিউ মোড: এসএমএস যায় না। কোড হিসেবে 123456 দিন।';
+
+  @override
+  String get profileSetupHeading => 'আপনার পরিচয় দিন';
+
+  @override
+  String get profileSetupIntro => 'এতে আয়োজক ও দল আপনাকে চিনতে পারবে।';
+
+  @override
+  String get profileName => 'পুরো নাম';
+
+  @override
+  String get profileNameHint => 'আপনার নাম';
+
+  @override
+  String get profileDivision => 'বিভাগ';
+
+  @override
+  String get profileDivisionHint => 'বিভাগ বেছে নিন';
+
+  @override
+  String get profileDivisionNone => 'বাছা হয়নি';
+
+  @override
+  String get profileRoleTitle => 'আমি মূলত চাই';
+
+  @override
+  String get roleFanTitle => 'দর্শক';
+
+  @override
+  String get roleFanBody => 'অনুসরণ করুন ও খবর রাখুন';
+
+  @override
+  String get roleOrganizerTitle => 'আয়োজক';
+
+  @override
+  String get roleOrganizerBody => 'টুর্নামেন্ট বানান ও চালান';
+
+  @override
+  String get rolePlayerTitle => 'খেলোয়াড়';
+
+  @override
+  String get rolePlayerBody => 'টুর্নামেন্টে যোগ দিন ও খেলুন';
+
+  @override
+  String get roleNote => 'পরে বদলাতে পারবেন। এতে আপনার অনুমতি বদলায় না।';
+
+  @override
+  String get photoAdd => 'ছবি দিন';
+
+  @override
+  String get photoChange => 'ছবি বদলান';
+
+  @override
+  String get photoRemove => 'ছবি সরান';
+
+  @override
+  String get photoFailed => 'ছবিটি নেওয়া যায়নি। অন্য ছবি চেষ্টা করুন।';
+
+  @override
+  String get profileContinue => 'চালিয়ে যান';
+
+  @override
+  String get profileSave => 'সংরক্ষণ করুন';
+
+  @override
+  String get profileSaved => 'প্রোফাইল সংরক্ষণ হয়েছে।';
+
+  @override
+  String get profileUseOtherNumber => 'অন্য নম্বর ব্যবহার করুন';
+
+  @override
+  String get signOut => 'সাইন আউট';
+
+  @override
+  String get signOutTitle => 'সাইন আউট করবেন?';
+
+  @override
+  String get signOutBody => 'আবার মোবাইল নম্বর দিয়ে সাইন ইন করতে পারবেন।';
+
+  @override
+  String get actionCancel => 'বাতিল';
+
+  @override
+  String get profileSignedOutHint => 'টুর্নামেন্ট বানাতে ও যোগ দিতে সাইন ইন করুন।';
+
+  @override
+  String authCodeSentTo(String phone) => '$phone নম্বরে ৬ সংখ্যার কোড পাঠানো হয়েছে।';
+
+  @override
+  String authResendIn(int seconds) => '$seconds সেকেন্ড পরে কোড আবার পাঠানো যাবে';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

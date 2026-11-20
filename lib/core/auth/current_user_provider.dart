@@ -2,13 +2,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'account_role.dart';
 import 'app_user.dart';
+import 'initial_user_provider.dart';
 import 'tournament_role.dart';
 
-/// Holds the signed-in user. Real sign-in is built in Step 1.1; until then the
-/// developer tools screen drives this state so roles can be tested.
+/// Holds the signed-in user. The person is found again when the app starts (see
+/// `initialUserProvider`). The developer tools screen can also sign in as a test
+/// person to try roles.
 class CurrentUserNotifier extends Notifier<AppUser?> {
   @override
-  AppUser? build() => null;
+  AppUser? build() => ref.read(initialUserProvider);
+
+  /// Sets the signed-in person (after a correct code, or after the profile is saved).
+  void setUser(AppUser user) {
+    state = user;
+  }
 
   void signInAs(AccountRole role) {
     final previous = state;

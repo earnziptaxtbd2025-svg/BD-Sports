@@ -191,6 +191,144 @@ class EnglishStrings extends AppStrings {
   String get liveEmpty => 'Matches being played now will show here.';
 
   @override
+  String get authWelcomeBack => 'Welcome back!';
+
+  @override
+  String get authSignInSubtitle => 'Sign in with your mobile number to continue.';
+
+  @override
+  String get authPhoneLabel => 'Mobile number';
+
+  @override
+  String get authPhoneHint => '01XXXXXXXXX';
+
+  @override
+  String get authSendCode => 'Send code';
+
+  @override
+  String get authTermsNote => 'By continuing you agree to the terms and privacy policy.';
+
+  @override
+  String get authVerifyHeading => 'Enter the code';
+
+  @override
+  String get authVerify => 'Verify';
+
+  @override
+  String get authResend => 'Resend code';
+
+  @override
+  String get authChangeNumber => 'Change number';
+
+  @override
+  String get authCodeResent => 'A new code was sent.';
+
+  @override
+  String get authCodeWrong => 'The code is not correct or has expired. Check it or ask for a new code.';
+
+  @override
+  String get authTooMany => 'Too many tries. Please wait a few minutes.';
+
+  @override
+  String get authOffline => 'No internet. Connect and try again.';
+
+  @override
+  String get authSomethingWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get authPreviewHint => 'Preview mode: no SMS is sent. Use the code 123456.';
+
+  @override
+  String get profileSetupHeading => 'Tell us about you';
+
+  @override
+  String get profileSetupIntro => 'This helps organizers and teams know who you are.';
+
+  @override
+  String get profileName => 'Full name';
+
+  @override
+  String get profileNameHint => 'Your name';
+
+  @override
+  String get profileDivision => 'Division';
+
+  @override
+  String get profileDivisionHint => 'Choose your division';
+
+  @override
+  String get profileDivisionNone => 'Not set';
+
+  @override
+  String get profileRoleTitle => 'I mainly want to';
+
+  @override
+  String get roleFanTitle => 'Fan';
+
+  @override
+  String get roleFanBody => 'Follow and stay updated';
+
+  @override
+  String get roleOrganizerTitle => 'Organizer';
+
+  @override
+  String get roleOrganizerBody => 'Create and run tournaments';
+
+  @override
+  String get rolePlayerTitle => 'Player';
+
+  @override
+  String get rolePlayerBody => 'Join tournaments and play';
+
+  @override
+  String get roleNote => 'You can change this later. It does not change what you are allowed to do.';
+
+  @override
+  String get photoAdd => 'Add photo';
+
+  @override
+  String get photoChange => 'Change photo';
+
+  @override
+  String get photoRemove => 'Remove photo';
+
+  @override
+  String get photoFailed => 'Could not use that photo. Try another.';
+
+  @override
+  String get profileContinue => 'Continue';
+
+  @override
+  String get profileSave => 'Save';
+
+  @override
+  String get profileSaved => 'Profile saved.';
+
+  @override
+  String get profileUseOtherNumber => 'Use a different number';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signOutTitle => 'Sign out?';
+
+  @override
+  String get signOutBody => 'You can sign in again with your mobile number.';
+
+  @override
+  String get actionCancel => 'Cancel';
+
+  @override
+  String get profileSignedOutHint => 'Sign in to create and join tournaments.';
+
+  @override
+  String authCodeSentTo(String phone) => 'We sent a 6-digit code to $phone.';
+
+  @override
+  String authResendIn(int seconds) => 'Resend code in ${seconds}s';
+
+  @override
   String permission(Permission permission) {
     switch (permission) {
       case Permission.createTournament:

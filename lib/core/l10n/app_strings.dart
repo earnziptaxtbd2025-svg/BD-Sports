@@ -124,6 +124,54 @@ abstract class AppStrings {
   String get trendingEmpty;
   String get liveEmpty;
 
+  // ---- Sign in and profile (Step 1.1) ----
+  String get authWelcomeBack;
+  String get authSignInSubtitle;
+  String get authPhoneLabel;
+  String get authPhoneHint;
+  String get authSendCode;
+  String get authTermsNote;
+  String get authVerifyHeading;
+  String get authVerify;
+  String get authResend;
+  String get authChangeNumber;
+  String get authCodeResent;
+  String get authCodeWrong;
+  String get authTooMany;
+  String get authOffline;
+  String get authSomethingWrong;
+  String get authPreviewHint;
+  String get profileSetupHeading;
+  String get profileSetupIntro;
+  String get profileName;
+  String get profileNameHint;
+  String get profileDivision;
+  String get profileDivisionHint;
+  String get profileDivisionNone;
+  String get profileRoleTitle;
+  String get roleFanTitle;
+  String get roleFanBody;
+  String get roleOrganizerTitle;
+  String get roleOrganizerBody;
+  String get rolePlayerTitle;
+  String get rolePlayerBody;
+  String get roleNote;
+  String get photoAdd;
+  String get photoChange;
+  String get photoRemove;
+  String get photoFailed;
+  String get profileContinue;
+  String get profileSave;
+  String get profileSaved;
+  String get profileUseOtherNumber;
+  String get signOut;
+  String get signOutTitle;
+  String get signOutBody;
+  String get actionCancel;
+  String get profileSignedOutHint;
+  String authCodeSentTo(String phone);
+  String authResendIn(int seconds);
+
   // ---- Names of enum values ----
   String permission(Permission permission);
   String accountRole(AccountRole role);
@@ -173,6 +221,50 @@ abstract class AppStrings {
         searchHint,
         trendingEmpty,
         liveEmpty,
+        authWelcomeBack,
+        authSignInSubtitle,
+        authPhoneLabel,
+        authPhoneHint,
+        authSendCode,
+        authTermsNote,
+        authVerifyHeading,
+        authVerify,
+        authResend,
+        authChangeNumber,
+        authCodeResent,
+        authCodeWrong,
+        authTooMany,
+        authOffline,
+        authSomethingWrong,
+        authPreviewHint,
+        profileSetupHeading,
+        profileSetupIntro,
+        profileName,
+        profileNameHint,
+        profileDivision,
+        profileDivisionHint,
+        profileDivisionNone,
+        profileRoleTitle,
+        roleFanTitle,
+        roleFanBody,
+        roleOrganizerTitle,
+        roleOrganizerBody,
+        rolePlayerTitle,
+        rolePlayerBody,
+        roleNote,
+        photoAdd,
+        photoChange,
+        photoRemove,
+        photoFailed,
+        profileContinue,
+        profileSave,
+        profileSaved,
+        profileUseOtherNumber,
+        signOut,
+        signOutTitle,
+        signOutBody,
+        actionCancel,
+        profileSignedOutHint,
       ];
 }
 
